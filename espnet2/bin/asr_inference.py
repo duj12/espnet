@@ -76,6 +76,7 @@ class Speech2Text:
         quantize_lm: bool = False,
         quantize_modules: List[str] = ["Linear"],
         quantize_dtype: str = "qint8",
+        dump_encoder_output: int = 0,  #0表示不输出，大于零的数表示输出对应的网络层的特征
     ):
         assert check_argument_types()
 
@@ -250,6 +251,7 @@ class Speech2Text:
         self.device = device
         self.dtype = dtype
         self.nbest = nbest
+        self.dump_encoder_output = dump_encoder_output
 
     @torch.no_grad()
     def __call__(
@@ -290,6 +292,8 @@ class Speech2Text:
         if isinstance(enc, tuple):
             enc = enc[0]
         assert len(enc) == 1, len(enc)
+        if self.dump_encoder_output:
+            return enc
 
         # c. Passed the encoder result and the beam search
         if self.beam_search_transducer:
@@ -404,6 +408,7 @@ def inference(
     quantize_lm: bool,
     quantize_modules: List[str],
     quantize_dtype: str,
+    dump_encoder_output: int = 0,
 ):
     assert check_argument_types()
     if batch_size > 1:
@@ -452,6 +457,7 @@ def inference(
         quantize_lm=quantize_lm,
         quantize_modules=quantize_modules,
         quantize_dtype=quantize_dtype,
+        dump_encoder_output=dump_encoder_output,
     )
     speech2text = Speech2Text.from_pretrained(
         model_tag=model_tag,
@@ -483,7 +489,14 @@ def inference(
 
             # N-best list of (text, token, token_int, hyp_object)
             try:
+
                 results = speech2text(**batch)
+                if dump_encoder_output:
+                    import numpy
+                    encoder_out = results[0].numpy()
+                    numpy.save(output_dir + "/" + keys[0].replace(".wav", "")+".npy", encoder_out)
+                    logging.info(f"save {keys[0]}.npy, jump the decoding procedure...")
+                    continue
             except TooShortUttError as e:
                 logging.warning(f"Utterance {keys} {e}")
                 hyp = Hypothesis(score=0.0, scores={}, states={}, yseq=[])
@@ -542,6 +555,12 @@ def get_parser():
     )
 
     group = parser.add_argument_group("Input data related")
+    group.add_argument(
+        "--dump_encoder_output",
+        type=int,
+        default=1,
+        help="Whether to dump encoder output or not",
+    )
     group.add_argument(
         "--data_path_and_name_and_type",
         type=str2triple_str,

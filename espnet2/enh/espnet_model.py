@@ -1,5 +1,6 @@
 """Enhancement model module."""
-from typing import Dict, List, Optional, OrderedDict, Tuple
+from typing import Dict, List, Optional, Tuple
+from collections import OrderedDict
 
 import torch
 from packaging.version import parse as V

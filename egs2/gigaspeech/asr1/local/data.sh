@@ -53,7 +53,7 @@ if [ ${stage} -le 2 ] && [ ${stop_stage} -ge 2 ]; then
     abs_data_dir=$(readlink -f ${data_dir})
     log "making Kaldi format data directory in ${abs_data_dir}"
     pushd GigaSpeech
-    ./toolkits/kaldi/gigaspeech_data_prep.sh ${GIGASPEECH} ${abs_data_dir} true
+    ./toolkits/kaldi/gigaspeech_data_prep.sh ${GIGASPEECH} ${abs_data_dir}   #true
     popd
 fi
 
