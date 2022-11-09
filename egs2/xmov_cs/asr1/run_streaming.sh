@@ -9,10 +9,10 @@ train_set=train
 valid_set=dev
 test_sets="dev test"
 
-asr_config=conf/train_asr_conformer.yaml
-inference_config=conf/decode_asr_rnn.yaml
+asr_config=conf/train_asr_streaming_transformer.yaml
+inference_config=conf/decode_asr_streaming.yaml
 
-lm_config=conf/train_lm_transformer.yaml
+lm_config=conf/train_lm.yaml
 use_lm=true
 use_wordlm=false
 
@@ -21,6 +21,7 @@ use_wordlm=false
 speed_perturb_factors="0.9 1.0 1.1"
 
 ./asr.sh                                               \
+    --use_streaming true                               \
     --lang zh                                          \
     --audio_format wav                                 \
     --feats_type raw                                   \

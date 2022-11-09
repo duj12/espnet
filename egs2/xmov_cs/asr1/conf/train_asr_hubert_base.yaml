@@ -1,0 +1,78 @@
+# The initialization method for model parameters
+# init: xavier_uniform
+
+freeze_param: [
+    "encoder.encoders.mask_emb", "encoder.encoders.feature_extractor",
+    "encoder.encoders.post_extract_proj", "encoder.encoders.encoder.pos_conv",
+]
+
+input_size: 1
+encoder: hubert
+encoder_conf:
+    output_size: 256
+    normalize_before: false
+    freeze_finetune_updates: 10000
+    # if use espent-trained model
+    # hubert_url: espnet
+    # hubert_dir_path: ../../librispeech/ssl1/exp/pretrain_train_asr_hubert_base_960h_pretrain_it1_raw_iter1/valid.acc.best.pth
+    # if use downloaded model:
+    hubert_url: checkpoint_best.pt
+    hubert_dir_path: data/pretrained_hubert
+
+# decoder related
+decoder: transformer
+decoder_conf:
+    attention_heads: 4
+    linear_units: 2048
+    num_blocks: 6
+    dropout_rate: 0.1
+    positional_dropout_rate: 0.1
+    self_attention_dropout_rate: 0.0
+    src_attention_dropout_rate: 0.0
+
+# CTC realted
+ctc_conf:
+    ignore_nan_grad: true
+
+# hybrid CTC/attention
+model_conf:
+    ctc_weight: 0.3
+    lsm_weight: 0.1     # label smoothing option
+    length_normalized_loss: false
+
+# minibatch related
+num_workers: 4
+batch_type: numel
+#sort_batch_in_length: false
+batch_bins: 70000000 #4 A-100
+num_iters_per_epoch: 40000  # save ckpt every N steps
+
+# optimization related
+accum_grad: 1
+grad_clip: 5
+max_epoch: 100
+patience: 10
+val_scheduler_criterion:
+    - valid
+    - acc
+best_model_criterion:
+-   - valid
+    - acc
+    - max
+keep_nbest_models: 10
+
+optim: adam
+optim_conf:
+   lr: 0.0002
+scheduler: warmuplr
+scheduler_conf:
+   warmup_steps: 8000
+
+
+unused_parameters: true
+
+frontend: null
+
+normalize: null
+
+specaug: null

@@ -11,9 +11,9 @@ lm_conf:
 # optimization related
 grad_clip: 5.0
 batch_type: numel
-batch_bins: 10000000
+batch_bins: 1000000000  # for 2 A-100 
 accum_grad: 1
-max_epoch: 20
+max_epoch: 25
 
 optim: adam
 optim_conf:

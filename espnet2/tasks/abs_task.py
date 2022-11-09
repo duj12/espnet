@@ -682,6 +682,12 @@ class AbsTask(ABC):
             default=None,
             help="If not given, the value of --batch_bins is used",
         )
+        group.add_argument(
+            "--sort_batch_in_length",
+            type=str2bool,
+            default=True,
+            help="Whether to sort batch in sequence length.",
+        )
 
         group.add_argument("--train_shape_file", type=str, action="append", default=[])
         group.add_argument("--valid_shape_file", type=str, action="append", default=[])
@@ -1508,6 +1514,8 @@ class AbsTask(ABC):
             if iter_options.distributed
             else 1,
             utt2category_file=utt2category_file,
+            sort_batch_in_length=args.sort_batch_in_length,
+            seed=args.seed,
         )
 
         batches = list(batch_sampler)

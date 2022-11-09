@@ -81,6 +81,8 @@ def build_batch_sampler(
     fold_lengths: Sequence[int] = (),
     padding: bool = True,
     utt2category_file: str = None,
+    sort_batch_in_length: bool = True,
+    seed: int = 0,
 ) -> AbsSampler:
     """Helper function to instantiate BatchSampler.
 
@@ -143,6 +145,8 @@ def build_batch_sampler(
             drop_last=drop_last,
             padding=padding,
             min_batch_size=min_batch_size,
+            sort_batch_in_length=sort_batch_in_length,
+            seed=seed,
         )
 
     elif type == "length":

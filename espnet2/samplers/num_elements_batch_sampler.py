@@ -1,3 +1,4 @@
+import random
 from typing import Iterator, List, Tuple, Union
 
 import numpy as np
@@ -8,6 +9,10 @@ from espnet2.samplers.abs_sampler import AbsSampler
 
 
 class NumElementsBatchSampler(AbsSampler):
+    '''
+    add sort_batch_in_length, which will deprecate `sort_in_batch`, default is True.
+    when sort_batch_in_length==False, the length of keys are not sorted, which is the same as inference.
+    '''
     def __init__(
         self,
         batch_bins: int,
@@ -17,6 +22,8 @@ class NumElementsBatchSampler(AbsSampler):
         sort_batch: str = "ascending",
         drop_last: bool = False,
         padding: bool = True,
+        sort_batch_in_length: bool = True,
+        seed: int = 0,
     ):
         assert check_argument_types()
         assert batch_bins > 0
@@ -34,7 +41,7 @@ class NumElementsBatchSampler(AbsSampler):
         self.sort_in_batch = sort_in_batch
         self.sort_batch = sort_batch
         self.drop_last = drop_last
-
+        self.sort_batch_in_length = sort_batch_in_length
         # utt2shape: (Length, ...)
         #    uttA 100,...
         #    uttB 201,...
@@ -49,9 +56,14 @@ class NumElementsBatchSampler(AbsSampler):
                     f"keys are mismatched between {s} != {shape_files[0]}"
                 )
 
-        # Sort samples in ascending order
-        # (shape order should be like (Length, Dim))
-        keys = sorted(first_utt2shape, key=lambda k: first_utt2shape[k][0])
+        if not sort_batch_in_length:
+            keys = list(first_utt2shape.keys())
+            random.seed(seed)
+            random.shuffle(keys)
+        else:
+            # Sort samples in ascending order
+            # (shape order should be like (Length, Dim))
+            keys = sorted(first_utt2shape, key=lambda k: first_utt2shape[k][0])
         if len(keys) == 0:
             raise RuntimeError(f"0 lines found: {shape_files[0]}")
         if padding:
@@ -147,7 +159,8 @@ class NumElementsBatchSampler(AbsSampler):
             f"N-batch={len(self)}, "
             f"batch_bins={self.batch_bins}, "
             f"sort_in_batch={self.sort_in_batch}, "
-            f"sort_batch={self.sort_batch})"
+            f"sort_batch={self.sort_batch}, "
+            f"sort_batch_in_length={self.sort_batch_in_length})"
         )
 
     def __len__(self):

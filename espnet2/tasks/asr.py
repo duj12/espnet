@@ -29,6 +29,7 @@ from espnet2.asr.encoder.hubert_encoder import (
     FairseqHubertEncoder,
     FairseqHubertPretrainEncoder,
 )
+from espnet2.asr.encoder.branchformer_encoder import BranchformerEncoder
 from espnet2.asr.encoder.longformer_encoder import LongformerEncoder
 from espnet2.asr.encoder.rnn_encoder import RNNEncoder
 from espnet2.asr.encoder.transformer_encoder import TransformerEncoder
@@ -129,6 +130,7 @@ encoder_choices = ClassChoices(
         hubert=FairseqHubertEncoder,
         hubert_pretrain=FairseqHubertPretrainEncoder,
         longformer=LongformerEncoder,
+        branchformer=BranchformerEncoder,
     ),
     type_check=AbsEncoder,
     default="rnn",

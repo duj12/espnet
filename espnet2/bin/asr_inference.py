@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import logging
+import os
 import sys
 from distutils.version import LooseVersion
 from pathlib import Path
@@ -493,7 +494,8 @@ def inference(
                 results = speech2text(**batch)
                 if dump_encoder_output:
                     import numpy
-                    encoder_out = results[0].numpy()
+                    encoder_out = results[0].cpu().numpy()
+                    os.mkdir(output_dir)
                     numpy.save(output_dir + "/" + keys[0].replace(".wav", "")+".npy", encoder_out)
                     logging.info(f"save {keys[0]}.npy, jump the decoding procedure...")
                     continue
@@ -558,7 +560,7 @@ def get_parser():
     group.add_argument(
         "--dump_encoder_output",
         type=int,
-        default=1,
+        default=0,
         help="Whether to dump encoder output or not",
     )
     group.add_argument(

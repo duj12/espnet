@@ -815,10 +815,23 @@ if ! "${skip_train}"; then
                 _split_dir="${lm_stats_dir}/splits${num_splits_lm}"
                 if [ ! -f "${_split_dir}/.done" ]; then
                     rm -f "${_split_dir}/.done"
-                    ${python} -m espnet2.bin.split_scps \
-                      --scps "${data_feats}/lm_train.txt" "${lm_stats_dir}/train/text_shape.${lm_token_type}" \
-                      --num_splits "${num_splits_lm}" \
-                      --output_dir "${_split_dir}"
+                    # ${python} -m espnet2.bin.split_scps \
+                      # --scps "${data_feats}/lm_train.txt" "${lm_stats_dir}/train/text_shape.${lm_token_type}" \
+                      # --num_splits "${num_splits_lm}" \
+                      # --output_dir "${_split_dir}"
+                      
+                    for dir in ${_split_dir}/lm_train.txt  ${_split_dir}/text_shape.${lm_token_type}; do
+                        mkdir -p $dir
+                        echo $num_splits_lm > ${dir}/num_splits
+                    done
+                    scps=""
+                    for i in $(seq 0 $(($num_splits_lm-1)) ) ; do 
+                        scps=$scps" "${_split_dir}/text_shape.${lm_token_type}/split.$i
+                    done 
+                    split_scp.pl ${lm_stats_dir}/train/text_shape.${lm_token_type} $scps
+                    #then filter each key file
+                    filter_scps.pl JOB=0:$(($num_splits_lm-1)) ${_split_dir}/text_shape.${lm_token_type}/split.JOB "${data_feats}/lm_train.txt" ${_split_dir}/lm_train.txt/split.JOB
+                    
                     touch "${_split_dir}/.done"
                 else
                     log "${_split_dir}/.done exists. Spliting is skipped"
@@ -1055,14 +1068,30 @@ if ! "${skip_train}"; then
             _split_dir="${asr_stats_dir}/splits${num_splits_asr}"
             if [ ! -f "${_split_dir}/.done" ]; then
                 rm -f "${_split_dir}/.done"
-                ${python} -m espnet2.bin.split_scps \
-                  --scps \
-                      "${_asr_train_dir}/${_scp}" \
-                      "${_asr_train_dir}/text" \
-                      "${asr_stats_dir}/train/speech_shape" \
-                      "${asr_stats_dir}/train/text_shape.${token_type}" \
-                  --num_splits "${num_splits_asr}" \
-                  --output_dir "${_split_dir}"
+                # split_scps is tooooooo slow for large files, we use KALDI split and filter.
+                # ${python} -m espnet2.bin.split_scps \
+                  # --scps \
+                      # "${_asr_train_dir}/${_scp}" \
+                      # "${_asr_train_dir}/text" \
+                      # "${asr_stats_dir}/train/speech_shape" \
+                      # "${asr_stats_dir}/train/text_shape.${token_type}" \
+                  # --num_splits "${num_splits_asr}" \
+                  # --output_dir "${_split_dir}"
+                
+                for dir in ${_split_dir}/${_scp} ${_split_dir}/text ${_split_dir}/speech_shape ${_split_dir}/text_shape.${token_type}; do
+                    mkdir -p $dir
+                    echo $num_splits_asr > ${dir}/num_splits
+                done
+                scps=""
+                for i in $(seq 0 $(($num_splits_asr-1)) ) ; do 
+                    scps=$scps" "${_split_dir}/text_shape.${token_type}/split.$i
+                done 
+                split_scp.pl ${asr_stats_dir}/train/text_shape.${token_type} $scps
+                #then filter each key file
+                filter_scps.pl JOB=0:$(($num_splits_asr-1)) ${_split_dir}/text_shape.${token_type}/split.JOB ${asr_stats_dir}/train/speech_shape ${_split_dir}/speech_shape/split.JOB
+                filter_scps.pl JOB=0:$(($num_splits_asr-1)) ${_split_dir}/text_shape.${token_type}/split.JOB ${_st_train_dir}/${_scp} ${_split_dir}/${_scp}/split.JOB
+                filter_scps.pl JOB=0:$(($num_splits_asr-1)) ${_split_dir}/text_shape.${token_type}/split.JOB ${_st_train_dir}/text ${_split_dir}/text/split.JOB
+                
                 touch "${_split_dir}/.done"
             else
                 log "${_split_dir}/.done exists. Spliting is skipped"

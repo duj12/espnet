@@ -1,13 +1,22 @@
 MAIN_ROOT=$PWD/../../..
 KALDI_ROOT=$MAIN_ROOT/tools/kaldi
 
-export PATH=$PWD/utils:$KALDI_ROOT/tools/openfst/bin:$KALDI_ROOT/tools/sph2pipe:$PATH
+CODE_DIR=/data/megastore/Projects/DuJing/code
+#MAIN_ROOT=$CODE_DIR/espnet
+FAIRSEQ_ROOT=$CODE_DIR/fairseq
+S3PRL_ROOT=$CODE_DIR/s3prl
+
 #[ ! -f $KALDI_ROOT/tools/config/common_path.sh ] && echo >&2 "The standard file $KALDI_ROOT/tools/config/common_path.sh is not present -> Exit!" && exit 1
 #. $KALDI_ROOT/tools/config/common_path.sh
 export LC_ALL=C
 
 #. "${MAIN_ROOT}"/tools/activate_python.sh && . "${MAIN_ROOT}"/tools/extra_path.sh
-export PATH=$MAIN_ROOT/utils:$MAIN_ROOT/espnet/bin:$PATH
+
+export PYTHONPATH=${MAIN_ROOT}:${FAIRSEQ_ROOT}:${S3PRL_ROOT}:${PYTHONPATH:-}
+
+export PATH=$KALDI_ROOT/tools/openfst/bin:$KALDI_ROOT/tools/sph2pipe:$KALDI_ROOT/tools/sctk/bin:$PATH
+export PATH=$PWD/utils:$MAIN_ROOT/utils:$MAIN_ROOT/espnet/bin:$PATH
+export PATH=$MAIN_ROOT/tools/kenlm/build/bin:$PATH
 
 export OMP_NUM_THREADS=1
 
