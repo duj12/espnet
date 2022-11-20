@@ -235,11 +235,11 @@ class CommonPreprocessor(AbsPreprocessor):
                 if f.frames == nsamples:
                     noise = f.read(dtype=np.float64, always_2d=True)
                 elif f.frames < nsamples:
-                    if f.frames / nsamples < self.short_noise_thres:
-                        logging.warning(
-                            f"Noise ({f.frames}) is much shorter than "
-                            f"speech ({nsamples}) in dynamic mixing"
-                        )
+                    # if f.frames / nsamples < self.short_noise_thres:
+                    #     logging.warning(
+                    #         f"Noise ({f.frames}) is much shorter than "
+                    #         f"speech ({nsamples}) in dynamic mixing"
+                    #     )
                     offset = np.random.randint(0, nsamples - f.frames)
                     # noise: (Time, Nmic)
                     noise = f.read(dtype=np.float64, always_2d=True)
@@ -294,8 +294,9 @@ class CommonPreprocessor(AbsPreprocessor):
                     and self.noise_apply_prob >= np.random.random()
                 ):
                     speech, _ = self._add_noise(speech, power)
-
-                speech = speech.T
+                #speech = speech.T    #commented
+                if len(speech.shape) > 1:  # multi-channel
+                    speech = speech[0]   #remove channel dimension
                 ma = np.max(np.abs(speech))
                 if ma > 1.0:
                     speech /= ma

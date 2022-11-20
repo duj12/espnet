@@ -23,7 +23,10 @@ from typeguard import check_argument_types
 from espnet2.asr.encoder.abs_encoder import AbsEncoder
 from espnet.nets.pytorch_backend.nets_utils import make_pad_mask
 from espnet.nets.pytorch_backend.transformer.layer_norm import LayerNorm
-
+from espnet2.asr.specaug.specaug import SpecAug
+from espnet.nets.pytorch_backend.transformer.subsampling_without_posenc import (
+    Conv2dSubsamplingWOPosEnc,
+)
 
 class FairseqHubertEncoder(AbsEncoder):
     """FairSeq Hubert encoder module, used for loading pretrained weight and finetuning
@@ -66,6 +69,9 @@ class FairseqHubertEncoder(AbsEncoder):
         mask_channel_selection: str = "static",
         layerdrop: float = 0.1,
         feature_grad_mult: float = 0.0,
+        specaug: Optional[str] = None,
+        output_layer: Optional[str] = None,
+        **args,
     ):
         assert check_argument_types()
         super().__init__()
@@ -167,12 +173,48 @@ class FairseqHubertEncoder(AbsEncoder):
         if self.normalize_before:
             self.after_norm = LayerNorm(output_size)
 
-        if output_size and output_size != d:
-            self.output_layer = torch.nn.Sequential(
-                torch.nn.Linear(d, output_size),
-            )
+        # 2. Data augmentation for spectrogram
+        if specaug is not None:
+            self.specaug = SpecAug(**args['specaug_conf'])
         else:
-            self.output_layer = None
+            self.specaug = None
+        if output_layer and output_size:
+            if output_layer == "linear":
+                self.output_layer = torch.nn.Sequential(
+                    torch.nn.Linear(d, output_size),
+                    torch.nn.LayerNorm(output_size),
+                    torch.nn.Dropout(dropout_rate),
+                    torch.nn.ReLU(),
+                )
+                self.subsample = 1
+            elif output_layer == "conv2d":
+                self.output_layer = Conv2dSubsamplingWOPosEnc(
+                    d, output_size, dropout_rate, kernels=[3, 3], strides=[2, 2]
+                )
+                self.subsample = 4
+            elif output_layer == "conv2d6":
+                self.output_layer = Conv2dSubsamplingWOPosEnc(
+                    d, output_size, dropout_rate, kernels=[3, 5], strides=[2, 3]
+                )
+                self.subsample = 6
+            elif output_layer == "conv2d8":
+                self.output_layer = Conv2dSubsamplingWOPosEnc(
+                    d,
+                    output_size,
+                    dropout_rate,
+                    kernels=[3, 3, 3],
+                    strides=[2, 2, 2],
+                )
+                self.subsample = 8
+            else:
+                raise ValueError("unknown output_layer: " + output_layer)
+        else:
+            if output_size and output_size != d:
+                self.output_layer = torch.nn.Sequential(
+                    torch.nn.Linear(d, output_size),
+                )
+            else:
+                self.output_layer = None
 
         self.freeze_finetune_updates = freeze_finetune_updates
         self.register_buffer("num_updates", torch.LongTensor([0]))
@@ -220,11 +262,19 @@ class FairseqHubertEncoder(AbsEncoder):
 
         # save gpu memory
         del enc_outputs
+        feats_lengths = (~masks).sum(dim=1)
+        if self.specaug is not None and self.training:
+            xs_pad, feats_lengths = self.specaug(xs_pad, feats_lengths)
+
+        if isinstance(self.output_layer, Conv2dSubsamplingWOPosEnc):
+            xs_pad, masks = self.output_layer(xs_pad, masks.unsqueeze(1))
+            masks = masks.squeeze(1)
+        elif self.output_layer is not None:
+            xs_pad = self.output_layer(xs_pad)
 
         olens = (~masks).sum(dim=1)
-
-        if self.output_layer is not None:
-            xs_pad = self.output_layer(xs_pad)
+        # if self.output_layer is not None:
+        #     xs_pad = self.output_layer(xs_pad)
 
         if self.normalize_before:
             xs_pad = self.after_norm(xs_pad)
