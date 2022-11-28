@@ -27,6 +27,19 @@ from espnet2.asr.specaug.specaug import SpecAug
 from espnet.nets.pytorch_backend.transformer.subsampling_without_posenc import (
     Conv2dSubsamplingWOPosEnc,
 )
+from espnet.nets.pytorch_backend.transformer.subsampling import (
+    TooShortUttError,
+)
+
+def check_short_utt(sub, size):
+    """Check if the utterance is too short for subsampling."""
+    if sub==4 and size < 7:
+        return True, 7   # for 4-times subsampling, min length is 7.
+    elif sub==6 and size < 11:
+        return True, 9
+    elif sub==8 and size < 15:
+        return True, 11
+    return False, -1
 
 class FairseqHubertEncoder(AbsEncoder):
     """FairSeq Hubert encoder module, used for loading pretrained weight and finetuning
@@ -267,6 +280,14 @@ class FairseqHubertEncoder(AbsEncoder):
             xs_pad, feats_lengths = self.specaug(xs_pad, feats_lengths)
 
         if isinstance(self.output_layer, Conv2dSubsamplingWOPosEnc):
+            short_status, limit_size = check_short_utt(self.subsample, xs_pad.size(1))
+            if short_status:
+                raise TooShortUttError(
+                    f"has {xs_pad.size(1)} frames and is too short for subsampling "
+                    + f"(it needs more than {limit_size} frames), return empty results",
+                    xs_pad.size(1),
+                    limit_size,
+                )
             xs_pad, masks = self.output_layer(xs_pad, masks.unsqueeze(1))
             masks = masks.squeeze(1)
         elif self.output_layer is not None:
