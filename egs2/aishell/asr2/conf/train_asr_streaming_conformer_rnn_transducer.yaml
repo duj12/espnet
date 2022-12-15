@@ -1,0 +1,85 @@
+# The conformer transducer training configuration
+# WERs for test-clean/test-other are 2.8 and 6.6, respectively.
+# batch_bins=10000000 Trained with RTX A6000(48GB) x 4 GPUs. It takes about 6 days.
+batch_type: numel
+batch_bins: 4000000   #1 A-100
+accum_grad: 4
+max_epoch: 60
+patience: none
+init: none
+num_att_plot: 0
+
+val_scheduler_criterion:
+    - valid
+    - loss
+best_model_criterion:
+-   - valid
+    - loss
+    - min
+keep_nbest_models: 10
+
+model_conf:
+    ctc_weight: 0.3
+    report_cer: True
+    report_wer: True
+
+encoder: contextual_block_conformer    # contextual_block_conformer is the core of streaming conformer
+encoder_conf:
+    output_size: 256    # dimension of attention
+    attention_heads: 4
+    linear_units: 2048  # the number of units of position-wise feed forward
+    num_blocks: 12      # the number of encoder blocks
+    dropout_rate: 0.1
+    positional_dropout_rate: 0.1
+    attention_dropout_rate: 0.0
+    input_layer: conv2d # encoder architecture type
+    normalize_before: true
+    activation_type: swish
+    macaron_style: true
+    use_cnn_module: true
+    cnn_module_kernel: 15
+    block_size: 40      # streaming configuration
+    hop_size: 16        # streaming configuration
+    look_ahead: 16      # streaming configuration
+    init_average: true  # streaming configuration
+    ctx_pos_enc: true   # streaming configuration
+
+
+decoder: transducer
+decoder_conf:
+    rnn_type: lstm
+    num_layers: 1
+    hidden_size: 512
+    dropout: 0.1
+    dropout_embed: 0.2
+
+joint_net_conf:
+    joint_space_size: 640
+
+optim: adam
+optim_conf:
+    lr: 0.0015
+    weight_decay: 0.000001
+scheduler: warmuplr
+scheduler_conf:
+    warmup_steps: 25000
+
+frontend_conf:
+  n_fft: 512
+  hop_length: 160
+
+specaug: specaug
+specaug_conf:
+    apply_time_warp: true
+    time_warp_window: 5
+    time_warp_mode: bicubic
+    apply_freq_mask: true
+    freq_mask_width_range:
+    - 0
+    - 30
+    num_freq_mask: 2
+    apply_time_mask: true
+    time_mask_width_range:
+    - 0
+    - 40
+    num_time_mask: 2

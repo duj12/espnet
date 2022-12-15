@@ -724,7 +724,10 @@ if ! "${skip_train}"; then
     if "${use_lm}"; then
         if [ ${stage} -le 6 ] && [ ${stop_stage} -ge 6 ]; then
             log "Stage 6: LM collect stats: train_set=${data_feats}/lm_train.txt, dev_set=${lm_dev_text}"
-
+            # shellcheck disable=SC2002
+            if [ ! -f ${data_feats}/lm_train.txt ] ;then
+                cat ${lm_train_text} | awk ' { if( NF != 1 ) print $0; } ' > "${data_feats}/lm_train.txt"
+            fi
             _opts=
             if [ -n "${lm_config}" ]; then
                 # To generate the config file: e.g.
@@ -844,10 +847,15 @@ if ! "${skip_train}"; then
                     for i in $(seq 0 $(($num_splits_lm-1)) ) ; do 
                         scps=$scps" "${_split_dir}/text_shape.${lm_token_type}/split.$i
                     done 
-                    split_scp.pl ${lm_stats_dir}/train/text_shape.${lm_token_type} $scps
-                    #then filter each key file
-                    filter_scps.pl JOB=0:$(($num_splits_lm-1)) ${_split_dir}/text_shape.${lm_token_type}/split.JOB "${data_feats}/lm_train.txt" ${_split_dir}/lm_train.txt/split.JOB
-                    
+                    if [ ! -f ${_split_dir}/text_shape.${lm_token_type}/split.$(($num_splits_lm-1)) ]; then
+                        cat ${lm_stats_dir}/train/text_shape.${lm_token_type} | shuf > ${lm_stats_dir}/train/text_shape.${lm_token_type}.shuf
+                        split_scp.pl ${lm_stats_dir}/train/text_shape.${lm_token_type}.shuf $scps
+                    fi
+                    ##then filter each key file
+                    #filter_scps.pl JOB=0:$(($num_splits_lm-1)) ${_split_dir}/text_shape.${lm_token_type}/split.JOB "${data_feats}/lm_train.txt" ${_split_dir}/lm_train.txt/split.JOB
+                    for i in $(seq 0 $(($num_splits_lm-1)) ); do
+                        filter_scp.pl ${_split_dir}/text_shape.${lm_token_type}/split.$i "${data_feats}/lm_train.txt" > ${_split_dir}/lm_train.txt/split.$i
+                    done
                     touch "${_split_dir}/.done"
                 else
                     log "${_split_dir}/.done exists. Spliting is skipped"

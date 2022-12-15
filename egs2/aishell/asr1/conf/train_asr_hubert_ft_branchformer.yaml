@@ -1,7 +1,11 @@
 # network architecture
 # pretrained model related
 freeze_param: [
-"frontend.upstream"
+"frontend.upstream.model.mask_emb",
+"frontend.upstream.model.label_embs_concat",
+"frontend.upstream.model.feature_extractor",
+"frontend.upstream.model.post_extract_proj",
+"frontend.upstream.model.encoder.pos_conv",
 ]
 
 frontend: s3prl
@@ -61,7 +65,7 @@ model_conf:
 
 # minibatch related
 batch_type: numel
-batch_bins: 24000000   # 2 A-100
+batch_bins: 8000000   # 1 A-100
 
 # optimization related
 accum_grad: 1

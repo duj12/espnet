@@ -12,14 +12,12 @@ encoder_conf:
     output_size: 256
     normalize_before: false
     freeze_finetune_updates: 10000
-    dropout_rate: 0.0   # no dropout in encoder is better
-    attention_dropout_rate: 0.0   # 
     # if use espent-trained model
     # hubert_url: espnet
     # hubert_dir_path: ../../librispeech/ssl1/exp/pretrain_train_asr_hubert_base_960h_pretrain_it1_raw_iter1/valid.acc.best.pth
     # if use downloaded model:
     hubert_url: checkpoint_best.pt
-    hubert_dir_path: /data/megastore/Projects/DuJing/code/espnet/egs2/xmov_cs/asr1/data/pretrained_hubert
+    hubert_dir_path: ../../xmov_cs/asr1/data/pretrained_hubert
     specaug: specaug
     specaug_conf:
         apply_time_warp: true
@@ -29,13 +27,12 @@ encoder_conf:
         freq_mask_width_range:
         - 0
         - 27
-        num_freq_mask: 5  # the feature dim is 768, so we can add more freq_mask
+        num_freq_mask: 2
         apply_time_mask: true
         time_mask_width_ratio_range:
         - 0.
         - 0.05
         num_time_mask: 5 #10. different to fbank's specaug, after hubert, the feature is deep, time masks should be less.
-    output_layer: conv2d  # 4-times downsampling
 
 # decoder related
 decoder: transformer
@@ -62,14 +59,13 @@ model_conf:
 num_workers: 4
 batch_type: numel
 #sort_batch_in_length: false
-batch_bins: 36000000 #4 A-100
-num_iters_per_epoch: 40000  # save ckpt every N steps
+batch_bins: 8000000 # 1 A-100
 
 # optimization related
-accum_grad: 16
+accum_grad: 1
 grad_clip: 5
-max_epoch: 100
-patience: 20
+max_epoch: 50
+#patience: 10
 val_scheduler_criterion:
     - valid
     - acc
@@ -84,7 +80,8 @@ optim_conf:
    lr: 0.0002
 scheduler: warmuplr
 scheduler_conf:
-   warmup_steps: 20000
+   warmup_steps: 8000
+
 
 unused_parameters: true
 
@@ -93,11 +90,3 @@ frontend: null
 normalize: null
 
 specaug: null
-
-# wav augmentation related:
-rir_scp: ./data/rir.list
-rir_apply_prob: 0.2
-noise_scp: ./data/noise.list
-noise_apply_prob: 0.8
-noise_db_range: "5_15"
-short_noise_thres: 0.1

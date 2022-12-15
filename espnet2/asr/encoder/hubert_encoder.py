@@ -33,12 +33,14 @@ from espnet.nets.pytorch_backend.transformer.subsampling import (
 
 def check_short_utt(sub, size):
     """Check if the utterance is too short for subsampling."""
+    if sub == 2 and size < 2:
+        return True, 2  # for 2-times subsampling, min length is 2.
     if sub==4 and size < 7:
-        return True, 7   # for 4-times subsampling, min length is 7.
-    elif sub==6 and size < 11:
-        return True, 9
-    elif sub==8 and size < 15:
-        return True, 11
+        return True, 7  # for 4-times subsampling, min length is 7.
+    elif sub==6 and size < 6:
+        return True, 6
+    elif sub==8 and size < 8:
+        return True, 8
     return False, -1
 
 class FairseqHubertEncoder(AbsEncoder):
@@ -200,6 +202,11 @@ class FairseqHubertEncoder(AbsEncoder):
                     torch.nn.ReLU(),
                 )
                 self.subsample = 1
+            elif output_layer == "conv2d2":
+                self.output_layer = Conv2dSubsamplingWOPosEnc(
+                    d, output_size, dropout_rate, kernels=[2], strides=[2]
+                )
+                self.subsample = 2
             elif output_layer == "conv2d":
                 self.output_layer = Conv2dSubsamplingWOPosEnc(
                     d, output_size, dropout_rate, kernels=[3, 3], strides=[2, 2]
@@ -207,7 +214,7 @@ class FairseqHubertEncoder(AbsEncoder):
                 self.subsample = 4
             elif output_layer == "conv2d6":
                 self.output_layer = Conv2dSubsamplingWOPosEnc(
-                    d, output_size, dropout_rate, kernels=[3, 5], strides=[2, 3]
+                    d, output_size, dropout_rate, kernels=[2, 3], strides=[2, 3]
                 )
                 self.subsample = 6
             elif output_layer == "conv2d8":
@@ -215,7 +222,7 @@ class FairseqHubertEncoder(AbsEncoder):
                     d,
                     output_size,
                     dropout_rate,
-                    kernels=[3, 3, 3],
+                    kernels=[2, 2, 2],
                     strides=[2, 2, 2],
                 )
                 self.subsample = 8

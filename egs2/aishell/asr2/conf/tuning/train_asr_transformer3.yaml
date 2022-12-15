@@ -1,25 +1,6 @@
 # network architecture
-# pretrained model related
-freeze_param: [
-"frontend.upstream"
-]
-
-frontend: s3prl
-frontend_conf:
-    frontend_conf:
-        upstream: hubert_local
-        upstream_model_config:
-        upstream_ckpt: <YOUR_DIR>/checkpoint_best.pt
-    download_dir: ./hub
-    multilayer_feature: true
-
-preencoder: linear
-preencoder_conf:
-    input_size: 768  # Note: If the upstream is changed, please change this value accordingly.
-    output_size: 80
-
 # encoder related
-encoder: conformer
+encoder: transformer
 encoder_conf:
     output_size: 256    # dimension of attention
     attention_heads: 4
@@ -28,13 +9,8 @@ encoder_conf:
     dropout_rate: 0.1
     positional_dropout_rate: 0.1
     attention_dropout_rate: 0.0
-    input_layer: conv2d2 # encoder architecture type
+    input_layer: conv2d # encoder architecture type
     normalize_before: true
-    rel_pos_type: latest
-    pos_enc_layer_type: rel_pos
-    selfattention_layer_type: rel_selfattn
-    activation_type: swish
-    cnn_module_kernel: 15
 
 # decoder related
 decoder: transformer
@@ -54,12 +30,11 @@ model_conf:
     length_normalized_loss: false
 
 # minibatch related
-num_workers: 8
 batch_type: numel
-batch_bins: 12000000
+batch_bins: 8500000
 
 # optimization related
-accum_grad: 1
+accum_grad: 2
 grad_clip: 5
 max_epoch: 50
 val_scheduler_criterion:

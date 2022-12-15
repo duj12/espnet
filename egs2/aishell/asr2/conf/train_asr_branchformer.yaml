@@ -1,23 +1,4 @@
 # network architecture
-# pretrained model related
-freeze_param: [
-"frontend.upstream"
-]
-
-frontend: s3prl
-frontend_conf:
-    frontend_conf:
-        upstream: hubert_local
-        upstream_model_config:
-        upstream_ckpt: ../../xmov_cs/asr1/data/pretrained_hubert/hubert_model_with_dict.pt    #这个是转换过之后的模型文件
-    download_dir: ./hub
-    multilayer_feature: true
-
-preencoder: linear
-preencoder_conf:
-    input_size: 768  # Note: If the upstream is changed, please change this value accordingly.
-    output_size: 80
-
 # encoder related
 encoder: branchformer
 encoder_conf:
@@ -61,13 +42,12 @@ model_conf:
 
 # minibatch related
 batch_type: numel
-batch_bins: 24000000   # 2 A-100
+batch_bins: 25000000   # 1 A-100
 
 # optimization related
 accum_grad: 1
 grad_clip: 5
 max_epoch: 60
-patience: 10
 val_scheduler_criterion:
     - valid
     - acc
@@ -83,7 +63,7 @@ optim_conf:
    weight_decay: 0.000001
 scheduler: warmuplr
 scheduler_conf:
-   warmup_steps: 8000
+   warmup_steps: 35000
 
 num_workers: 4      # num of workers of data loader
 use_amp: true      # automatic mixed precision

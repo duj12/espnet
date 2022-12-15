@@ -78,6 +78,21 @@ def extract_non_mandarin(text):
     return " ".join([w for w in text.split(" ") if not any(is_mandarin(c) for c in w)])
 
 
+def remove_space_between_mandarin(text):
+    """remove space between Mandarin characters"""
+
+    if len(text) <= 1:
+        return text
+    text = text.strip().split()
+    out_text = text[0]
+    for i in range(1, len(text)):
+        if is_english(text[i-1][-1]):
+            out_text += " "
+        if is_english(text[i][0]):
+            out_text += " "
+        out_text += text[i]
+    return out_text
+    
 def insert_space_between_mandarin(text):
     """insert space between Mandarin characters"""
 
