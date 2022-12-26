@@ -12,8 +12,15 @@ import tempfile
 import numpy as np
 import torch
 
-# * -------------------- training iterator related -------------------- *
+def char_score(char_freq, min_score=5, max_score=10):
+    chars, freq = list(char_freq.keys()), list(char_freq.values())
+    log_freq = np.log(freq)
+    max_count, min_count = log_freq.max(), log_freq.min()
+    score = min_score + (max_count - log_freq) / (max_count - min_count) * (max_score - min_score)
+    char2score = {c: s for c, s in zip(chars, score)}
+    return char2score
 
+# * -------------------- training iterator related -------------------- *
 
 class CompareValueTrigger(object):
     """Trigger invoked when key value getting bigger or lower than before.

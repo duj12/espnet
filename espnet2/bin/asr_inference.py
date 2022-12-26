@@ -78,6 +78,11 @@ class Speech2Text:
         quantize_modules: List[str] = ["Linear"],
         quantize_dtype: str = "qint8",
         dump_encoder_output: int = 0,  #0表示不输出，大于零的数表示输出对应的网络层的特征
+        biasing_weight: float = 1.0,
+        biasing_words_file: str = None,
+        dict_frequency_file: str = None,
+        min_boost_score: int = 0,
+        max_boost_score: int = 10,
     ):
         assert check_argument_types()
 
@@ -94,6 +99,8 @@ class Speech2Text:
 
         quantize_modules = set([getattr(torch.nn, q) for q in quantize_modules])
         quantize_dtype = getattr(torch, quantize_dtype)
+
+
 
         # 1. Build ASR model
         scorers = {}
@@ -131,6 +138,26 @@ class Speech2Text:
             length_bonus=LengthBonus(len(token_list)),
         )
 
+        # 5. [Optional] Build Text converter: e.g. bpe-sym -> Text
+        if token_type is None:
+            token_type = asr_train_args.token_type
+        if bpemodel is None:
+            bpemodel = asr_train_args.bpemodel
+
+        if token_type is None:
+            tokenizer = None
+        elif token_type == "bpe":
+            if bpemodel is not None:
+                tokenizer = build_tokenizer(token_type=token_type, bpemodel=bpemodel)
+            else:
+                tokenizer = None
+        else:
+            tokenizer = build_tokenizer(token_type=token_type)
+        converter = TokenIDConverter(token_list=token_list)
+        logging.info(f"Text tokenizer: {tokenizer}")
+        self.converter = converter
+        self.tokenizer = tokenizer
+
         # 2. Build Language model
         if lm_train_config is not None:
             lm, lm_train_args = LMTask.build_model_from_file(
@@ -160,6 +187,21 @@ class Speech2Text:
             ngram = None
         scorers["ngram"] = ngram
 
+
+
+        rescorers = {}
+        if biasing_words_file:
+            from espnet2.asr.contextual_biasing import ContextualBiasingRescorer
+            contextual_biasing = ContextualBiasingRescorer(
+                token_list=asr_model.token_list,
+                tokenizer = tokenizer,
+                biasing_words_file=biasing_words_file,
+                dict_frequency_file=dict_frequency_file,
+                min_boost_score=min_boost_score,
+                max_boost_score=max_boost_score,
+            )
+            rescorers.update(contextual_biasing=contextual_biasing)
+
         # 4. Build BeamSearch object
         if asr_model.use_transducer_decoder:
             beam_search_transducer = BeamSearchTransducer(
@@ -181,11 +223,13 @@ class Speech2Text:
                 lm=lm_weight,
                 ngram=ngram_weight,
                 length_bonus=penalty,
+                contextual_biasing=biasing_weight
             )
             beam_search = BeamSearch(
                 beam_size=beam_size,
                 weights=weights,
                 scorers=scorers,
+                rescorers=rescorers,
                 sos=asr_model.sos,
                 eos=asr_model.eos,
                 vocab_size=len(token_list),
@@ -223,28 +267,8 @@ class Speech2Text:
             logging.info(f"Beam_search: {beam_search}")
             logging.info(f"Decoding device={device}, dtype={dtype}")
 
-        # 5. [Optional] Build Text converter: e.g. bpe-sym -> Text
-        if token_type is None:
-            token_type = asr_train_args.token_type
-        if bpemodel is None:
-            bpemodel = asr_train_args.bpemodel
-
-        if token_type is None:
-            tokenizer = None
-        elif token_type == "bpe":
-            if bpemodel is not None:
-                tokenizer = build_tokenizer(token_type=token_type, bpemodel=bpemodel)
-            else:
-                tokenizer = None
-        else:
-            tokenizer = build_tokenizer(token_type=token_type)
-        converter = TokenIDConverter(token_list=token_list)
-        logging.info(f"Text tokenizer: {tokenizer}")
-
         self.asr_model = asr_model
         self.asr_train_args = asr_train_args
-        self.converter = converter
-        self.tokenizer = tokenizer
         self.beam_search = beam_search
         self.beam_search_transducer = beam_search_transducer
         self.maxlenratio = maxlenratio
@@ -410,6 +434,11 @@ def inference(
     quantize_modules: List[str],
     quantize_dtype: str,
     dump_encoder_output: int = 0,
+    biasing_weight: float = 1.0,
+    biasing_words_file: str = None,
+    dict_frequency_file: str = None,
+    min_boost_score: int = 0,
+    max_boost_score: int = 10,
 ):
     assert check_argument_types()
     if batch_size > 1:
@@ -459,6 +488,10 @@ def inference(
         quantize_modules=quantize_modules,
         quantize_dtype=quantize_dtype,
         dump_encoder_output=dump_encoder_output,
+        biasing_words_file=biasing_words_file,
+        dict_frequency_file=dict_frequency_file,
+        min_boost_score=min_boost_score,
+        max_boost_score=max_boost_score,
     )
     speech2text = Speech2Text.from_pretrained(
         model_tag=model_tag,
@@ -694,6 +727,11 @@ def get_parser():
         default=None,
         help="The keyword arguments for transducer beam search.",
     )
+    group.add_argument("--biasing_weight", type=float, default=1.0, help="hot words boost weight")
+    group.add_argument("--biasing_words_file", type=str, default="")
+    group.add_argument("--dict_frequency_file", type=str, default="")
+    group.add_argument("--min_boost_score", type=int, default=0)
+    group.add_argument("--max_boost_score", type=int, default=0)
 
     group = parser.add_argument_group("Text converter related")
     group.add_argument(

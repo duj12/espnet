@@ -8,7 +8,7 @@ import torch
 
 from espnet.nets.e2e_asr_common import end_detect
 from espnet.nets.scorer_interface import PartialScorerInterface, ScorerInterface
-
+from espnet.nets.rescorer_interface import RescorerInterface, BatchRescorerInterface
 
 class Hypothesis(NamedTuple):
     """Hypothesis data type."""
@@ -33,6 +33,7 @@ class BeamSearch(torch.nn.Module):
     def __init__(
         self,
         scorers: Dict[str, ScorerInterface],
+        rescorers: Dict[str, RescorerInterface],
         weights: Dict[str, float],
         beam_size: int,
         vocab_size: int,
@@ -83,6 +84,14 @@ class BeamSearch(torch.nn.Module):
                 self.full_scorers[k] = v
             if isinstance(v, torch.nn.Module):
                 self.nn_dict[k] = v
+
+        self.rescorers = dict()
+        for k, v in rescorers.items():
+            w = weights.get(k, 0)
+            if w == 0 or v is None:
+                continue
+            assert isinstance(v, BatchRescorerInterface), f"{k} ({type(v)}) does not implement BatchRescorerInterface"
+            self.rescorers[k] = v
 
         # set configurations
         self.sos = sos
@@ -327,6 +336,24 @@ class BeamSearch(torch.nn.Module):
             ]
         return best_hyps
 
+    def rescore(self, x: torch.Tensor, end_hyps: List[Hypothesis]):
+        hyps = [hyp.yseq[:-1] for hyp in end_hyps]
+        scores = [hyp.score for hyp in end_hyps]
+        for k, rescorer in self.rescorers.items():
+            states = [hyp.states[k] for hyp in end_hyps]
+            re_scores, _ = rescorer.batch_rescore(hyps, states)
+            scores = [scores[i] + self.weights[k] * re_scores[i] for i in range(len(hyps))]
+        end_hyps = [
+            Hypothesis(
+                score=scores[i],
+                scores=end_hyps[i].scores,
+                states=end_hyps[i].states,
+                yseq=end_hyps[i].yseq,
+            )
+            for i in range(len(hyps))
+        ]
+        return end_hyps
+
     def forward(
         self, x: torch.Tensor, maxlenratio: float = 0.0, minlenratio: float = 0.0
     ) -> List[Hypothesis]:
@@ -375,6 +402,12 @@ class BeamSearch(torch.nn.Module):
             else:
                 logging.debug(f"remained hypotheses: {len(running_hyps)}")
 
+        if self.rescorers:
+            for k, d in self.rescorers.items():
+                #init_rescore_state = d.batch_init_state(x)
+                for hyp in ended_hyps:
+                    hyp.states[k] = d.batch_init_state(x)
+            ended_hyps = self.rescore(x, ended_hyps)
         nbest_hyps = sorted(ended_hyps, key=lambda x: x.score, reverse=True)
         # check the number of hypotheses reaching to eos
         if len(nbest_hyps) == 0:
