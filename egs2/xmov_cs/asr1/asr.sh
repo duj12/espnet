@@ -52,6 +52,8 @@ fs=16k               # Sampling rate.
 min_wav_duration=0.1 # Minimum duration in second.
 max_wav_duration=20  # Maximum duration in second.
 
+max_lm_token=128     # Maximum Tokens of lm_train_text.
+
 # Tokenization related
 token_type=bpe      # Tokenization type (char or bpe).
 nbpe=30             # The number of BPE vocabulary.
@@ -722,7 +724,10 @@ if ! "${skip_train}"; then
     if "${use_lm}"; then
         if [ ${stage} -le 6 ] && [ ${stop_stage} -ge 6 ]; then
             log "Stage 6: LM collect stats: train_set=${data_feats}/lm_train.txt, dev_set=${lm_dev_text}"
-
+            # shellcheck disable=SC2002
+            if [ ! -f ${data_feats}/lm_train.txt ] ;then
+                cat ${lm_train_text} | awk ' { if( NF != 1 ) print $0; } ' > "${data_feats}/lm_train.txt"
+            fi
             _opts=
             if [ -n "${lm_config}" ]; then
                 # To generate the config file: e.g.
@@ -794,6 +799,20 @@ if ! "${skip_train}"; then
             <"${lm_stats_dir}/valid/text_shape" \
                 awk -v N="$(<${lm_token_list} wc -l)" '{ print $0 "," N }' \
                 >"${lm_stats_dir}/valid/text_shape.${lm_token_type}"
+            
+            # filter out too long text 
+            log filter out $lm_train_text longer than $max_lm_token.
+            for x in valid  train ; do 
+                mv "${lm_stats_dir}/$x/text_shape" "${lm_stats_dir}/$x/text_shape0"
+                mv "${lm_stats_dir}/$x/text_shape.${lm_token_type}" "${lm_stats_dir}/$x/text_shape0.${lm_token_type}"
+                cat "${lm_stats_dir}/$x/text_shape0" | \
+                    awk -v max=$max_lm_token '{ if($2 > max) print $0 }' > ${lm_stats_dir}/$x/long.scp
+                filter_scp.pl --exclude ${lm_stats_dir}/$x/long.scp ${lm_stats_dir}/$x/text_shape0 \
+                    >"${lm_stats_dir}/$x/text_shape"
+                filter_scp.pl --exclude ${lm_stats_dir}/$x/long.scp ${lm_stats_dir}/$x/text_shape0.${lm_token_type} \
+                    >"${lm_stats_dir}/$x/text_shape.${lm_token_type}"                
+            done
+            
         fi
 
 
@@ -828,10 +847,16 @@ if ! "${skip_train}"; then
                     for i in $(seq 0 $(($num_splits_lm-1)) ) ; do 
                         scps=$scps" "${_split_dir}/text_shape.${lm_token_type}/split.$i
                     done 
-                    split_scp.pl ${lm_stats_dir}/train/text_shape.${lm_token_type} $scps
-                    #then filter each key file
-                    filter_scps.pl JOB=0:$(($num_splits_lm-1)) ${_split_dir}/text_shape.${lm_token_type}/split.JOB "${data_feats}/lm_train.txt" ${_split_dir}/lm_train.txt/split.JOB
-                    
+                    if [ ! -f ${_split_dir}/text_shape.${lm_token_type}/split.$(($num_splits_lm-1)) ]; then
+                        cat ${lm_stats_dir}/train/text_shape.${lm_token_type} | shuf > ${lm_stats_dir}/train/text_shape.${lm_token_type}.shuf
+                        split_scp.pl ${lm_stats_dir}/train/text_shape.${lm_token_type}.shuf $scps
+                    fi
+                    ##then filter each key file
+                    #filter_scps.pl JOB=0:$(($num_splits_lm-1)) ${_split_dir}/text_shape.${lm_token_type}/split.JOB "${data_feats}/lm_train.txt" ${_split_dir}/lm_train.txt/split.JOB
+                    for i in $(seq 0 $(($num_splits_lm-1)) ); do
+                        log "filtering $i lm_text..."
+                        filter_scp.pl ${_split_dir}/text_shape.${lm_token_type}/split.$i "${data_feats}/lm_train.txt" > ${_split_dir}/lm_train.txt/split.$i
+                    done
                     touch "${_split_dir}/.done"
                 else
                     log "${_split_dir}/.done exists. Spliting is skipped"
@@ -1086,11 +1111,12 @@ if ! "${skip_train}"; then
                 for i in $(seq 0 $(($num_splits_asr-1)) ) ; do 
                     scps=$scps" "${_split_dir}/text_shape.${token_type}/split.$i
                 done 
-                split_scp.pl ${asr_stats_dir}/train/text_shape.${token_type} $scps
+                cat ${asr_stats_dir}/train/text_shape.${token_type} | shuf > ${asr_stats_dir}/train/text_shape.${token_type}.shuf
+                split_scp.pl ${asr_stats_dir}/train/text_shape.${token_type}.shuf $scps
                 #then filter each key file
                 filter_scps.pl JOB=0:$(($num_splits_asr-1)) ${_split_dir}/text_shape.${token_type}/split.JOB ${asr_stats_dir}/train/speech_shape ${_split_dir}/speech_shape/split.JOB
-                filter_scps.pl JOB=0:$(($num_splits_asr-1)) ${_split_dir}/text_shape.${token_type}/split.JOB ${_st_train_dir}/${_scp} ${_split_dir}/${_scp}/split.JOB
-                filter_scps.pl JOB=0:$(($num_splits_asr-1)) ${_split_dir}/text_shape.${token_type}/split.JOB ${_st_train_dir}/text ${_split_dir}/text/split.JOB
+                filter_scps.pl JOB=0:$(($num_splits_asr-1)) ${_split_dir}/text_shape.${token_type}/split.JOB ${_asr_train_dir}/${_scp} ${_split_dir}/${_scp}/split.JOB
+                filter_scps.pl JOB=0:$(($num_splits_asr-1)) ${_split_dir}/text_shape.${token_type}/split.JOB ${_asr_train_dir}/text ${_split_dir}/text/split.JOB
                 
                 touch "${_split_dir}/.done"
             else

@@ -1,0 +1,12 @@
+beam_size: 10
+penalty: 0.0
+maxlenratio: 0.0
+minlenratio: 0.0
+ctc_weight: 0.5
+lm_weight: 0.3
+ngram_weight: 0.7
+biasing_weight: 1.0
+biasing_words_file: data/hot_words.txt
+dict_frequency_file: data/token_freq.txt
+min_boost_score: 0
+max_boost_score: 10

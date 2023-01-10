@@ -14,7 +14,7 @@ export LC_ALL=C
 
 export PYTHONPATH=${MAIN_ROOT}:${FAIRSEQ_ROOT}:${S3PRL_ROOT}:${PYTHONPATH:-}
 
-export PATH=$KALDI_ROOT/tools/openfst/bin:$KALDI_ROOT/tools/sph2pipe:$KALDI_ROOT/tools/sctk/bin:$PATH
+export PATH=$KALDI_ROOT/tools/openfst/bin:$KALDI_ROOT/tools/sph2pipe:$KALDI_ROOT/tools/sctk/bin:$KALDI_ROOT/tools/srilm/bin:$KALDI_ROOT/tools/srilm/bin/i686-m64:$PATH
 export PATH=$PWD/utils:$MAIN_ROOT/utils:$MAIN_ROOT/espnet/bin:$PATH
 export PATH=$MAIN_ROOT/tools/kenlm/build/bin:$PATH
 

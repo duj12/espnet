@@ -854,6 +854,7 @@ if ! "${skip_train}"; then
                     ##then filter each key file
                     #filter_scps.pl JOB=0:$(($num_splits_lm-1)) ${_split_dir}/text_shape.${lm_token_type}/split.JOB "${data_feats}/lm_train.txt" ${_split_dir}/lm_train.txt/split.JOB
                     for i in $(seq 0 $(($num_splits_lm-1)) ); do
+                        log "filtering $i lm_text..."
                         filter_scp.pl ${_split_dir}/text_shape.${lm_token_type}/split.$i "${data_feats}/lm_train.txt" > ${_split_dir}/lm_train.txt/split.$i
                     done
                     touch "${_split_dir}/.done"

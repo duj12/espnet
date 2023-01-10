@@ -9,7 +9,7 @@ train_set=train
 valid_set=dev
 test_sets="dev test"
 
-asr_config=conf/train_asr_streaming_transformer.yaml
+asr_config=conf/train_asr_streaming_conformer.yaml
 inference_config=conf/decode_asr_streaming.yaml
 
 lm_config=conf/train_lm.yaml

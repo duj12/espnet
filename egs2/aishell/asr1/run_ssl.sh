@@ -155,7 +155,7 @@ fi
 
 # hubert作为特征提取器，使用branchformer_encoder + transformer_decoder
 if [ $experiment -eq 3 ]; then
-stage=11
+stage=12
 stop_stage=13
 expdir=exp/hubert-base
 asr_config=conf/train_asr_hubert_branchformer.yaml
@@ -169,7 +169,53 @@ ngram_num=4
 # add "--speed_perturb_factors="0.9 1.0 1.1" if you want to
 # apply speed perturbation for the training data
 
-CUDA_VISIBLE_DEVICES=1                                 \
+CUDA_VISIBLE_DEVICES=2,3                                 \
+./asr.sh                                               \
+    --ngpu 2                                           \
+    --stage ${stage}                                   \
+    --stop_stage ${stop_stage}                         \
+    --expdir ${expdir}                                 \
+    --lang zh                                          \
+    --audio_format wav                                 \
+    --feats_type raw                                   \
+    --token_type char                                  \
+    --feats_normalize null                             \
+    --use_lm ${use_lm}                                 \
+    --lm_config "${lm_config}"                         \
+    --use_ngram "${use_ngram}"                         \
+    --ngram_num   ${ngram_num}                         \
+    --inference_ngram ${ngram_num}gram.bin             \
+    --asr_config "${asr_config}"                       \
+    --inference_config "${inference_config}"           \
+    --inference_nj 16                                   \
+    --inference_asr_model ${inference_asr_model}       \
+    --gpu_inference false                               \
+    --train_set "${train_set}"                         \
+    --valid_set "${valid_set}"                         \
+    --test_sets "${test_sets}"                         \
+    --asr_speech_fold_length 512 \
+    --asr_text_fold_length 150 \
+    --lm_fold_length 150 \
+    --lm_train_text "data/train/text" #"$@"
+
+fi
+# 更新hubert的conformer层，使用branchformer_encoder + transformer_decoder
+if [ $experiment -eq 4 ]; then
+stage=12
+stop_stage=13
+expdir=exp/hubert-base
+asr_config=conf/train_asr_hubert_ft_branchformer.yaml
+inference_config=conf/decode_asr_transformer_ngram.yaml
+lm_config=conf/train_lm.yaml
+use_lm=false   #true
+use_ngram=false
+inference_asr_model=valid.acc.ave_10best.pth
+ngram_num=4
+# speed perturbation related
+# add "--speed_perturb_factors="0.9 1.0 1.1" if you want to
+# apply speed perturbation for the training data
+
+CUDA_VISIBLE_DEVICES=3                                 \
 ./asr.sh                                               \
     --ngpu 1                                           \
     --stage ${stage}                                   \
@@ -187,9 +233,9 @@ CUDA_VISIBLE_DEVICES=1                                 \
     --inference_ngram ${ngram_num}gram.bin             \
     --asr_config "${asr_config}"                       \
     --inference_config "${inference_config}"           \
-    --inference_nj 8                                   \
+    --inference_nj 32                                   \
     --inference_asr_model ${inference_asr_model}       \
-    --gpu_inference true                               \
+    --gpu_inference false                               \
     --train_set "${train_set}"                         \
     --valid_set "${valid_set}"                         \
     --test_sets "${test_sets}"                         \

@@ -129,5 +129,5 @@ if __name__ == "__main__":
         if wav.ndim > 1:
             wav = wav.mean(-1)
         assert wav.ndim == 1
-        snr = snr_estimate(wav, 0.2)
+        snr = snr_estimate(wav, 0.25)
         sys.stdout.write(f"{name} {snr}\n")
