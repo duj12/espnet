@@ -103,7 +103,7 @@ class BatchBeamSearch(BeamSearch):
         new_token_ids = top_ids % self.n_vocab
         return prev_hyp_ids, new_token_ids, prev_hyp_ids, new_token_ids
 
-    def init_hyp(self, x: torch.Tensor) -> BatchHypothesis:
+    def init_hyp(self, x: torch.Tensor, **kwargs) -> BatchHypothesis:
         """Get an initial hypothesis data.
 
         Args:
@@ -116,7 +116,11 @@ class BatchBeamSearch(BeamSearch):
         init_states = dict()
         init_scores = dict()
         for k, d in self.scorers.items():
-            init_states[k] = d.batch_init_state(x)
+            from espnet2.asr.decoder.rnn_decoder import RNNDecoder
+            if isinstance(d, RNNDecoder):
+                init_states[k] = d.batch_init_state(x, **kwargs)
+            else:
+                init_states[k] = d.batch_init_state(x)
             init_scores[k] = 0.0
         return self.batchfy(
             [

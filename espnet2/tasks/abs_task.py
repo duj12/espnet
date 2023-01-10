@@ -656,6 +656,11 @@ class AbsTask(ABC):
             help="Freeze parameters",
         )
 
+        group = parser.add_argument_group("Distillation related")
+        group.add_argument("--teacher_model", type=str_or_none, default=None,)
+        group.add_argument("--distilling_weight", type=float, default=[], nargs="*",)
+        group.add_argument("--distilling_module", type=str, default=[], nargs="*",)
+
         group = parser.add_argument_group("BatchSampler related")
         group.add_argument(
             "--num_iters_per_epoch",
@@ -1118,7 +1123,14 @@ class AbsTask(ABC):
             torch.autograd.set_detect_anomaly(args.detect_anomaly)
 
         # 2. Build model
-        model = cls.build_model(args=args)
+        teacher_model = None
+        if hasattr(args, "teacher_model") and args.teacher_model is not None:
+            teacher_config = os.path.join(os.path.dirname(args.teacher_model), "config.yaml")
+            teacher_model, asr_train_args = cls.build_model_from_file(
+                teacher_config, args.teacher_model, device="cuda" if args.ngpu > 0 else "cpu"
+            )
+            teacher_model.eval()
+        model = cls.build_model(args=args, teacher_model=teacher_model)
         if not isinstance(model, AbsESPnetModel):
             raise RuntimeError(
                 f"model must inherit {AbsESPnetModel.__name__}, but got {type(model)}"
@@ -1819,7 +1831,14 @@ class AbsTask(ABC):
         with config_file.open("r", encoding="utf-8") as f:
             args = yaml.safe_load(f)
         args = argparse.Namespace(**args)
-        model = cls.build_model(args)
+        teacher_model = None
+        if hasattr(args, "teacher_model") and args.teacher_model is not None:
+            teacher_config = os.path.join(os.path.dirname(args.teacher_model), "config.yaml")
+            teacher_model, asr_train_args = cls.build_model_from_file(
+                teacher_config, args.teacher_model, device=device
+            )
+            teacher_model.eval()
+        model = cls.build_model(args, teacher_model=teacher_model)
         if not isinstance(model, AbsESPnetModel):
             raise RuntimeError(
                 f"model must inherit {AbsESPnetModel.__name__}, but got {type(model)}"

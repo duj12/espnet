@@ -319,11 +319,19 @@ class Speech2TextStreaming:
                 is_final=is_final,
                 infer_mode=True,
             )
+
+            # get ctc non blank time-stamp
+            ctc_stamp = None
+            # if enc.size(1) > 0:
+            #     ctc_stamp = self.asr_model.ctc.non_blank_frames(enc, min_prob=0)[:, 1].tolist()
+            #     logging.info(f"ctc non blank time stamps {ctc_stamp}")
+
             nbest_hyps = self.beam_search(
                 x=enc[0],
                 maxlenratio=self.maxlenratio,
                 minlenratio=self.minlenratio,
                 is_final=is_final,
+                trigger_point=ctc_stamp,
             )
             ret = self.assemble_hyps(nbest_hyps)
         else:

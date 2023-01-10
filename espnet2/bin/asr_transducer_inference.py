@@ -345,8 +345,16 @@ class Speech2Text:
             right_context=self.right_context,
         )
 
+        logging.info("encoder output length: " + str(enc_out[0].shape[0]))
         nbest_hyps = self.beam_search(enc_out[0], is_final=is_final)
-
+        best = nbest_hyps[0]
+        logging.info(f"total log probability: {best.score:.2f}")
+        logging.info(
+            f"normalized log probability: {best.score / len(best.yseq):.2f}"
+        )
+        logging.info(
+            "best hypo: " + "".join(self.converter.ids2tokens(best.yseq[1:])) + "\n"
+        )
         self.num_processed_frames += self.chunk_size
 
         if is_final:

@@ -207,6 +207,7 @@ class ContextualBlockConformerEncoder(AbsEncoder):
         prev_states: torch.Tensor = None,
         is_final=True,
         infer_mode=False,
+        **kwargs,
     ) -> Tuple[torch.Tensor, torch.Tensor, Optional[torch.Tensor]]:
         """Embed positions in tensor.
 
@@ -220,8 +221,9 @@ class ContextualBlockConformerEncoder(AbsEncoder):
         Returns:
             position embedded tensor and mask
         """
+        collect_hid = kwargs.get("output_intermediate_layers", False)
         if self.training or not infer_mode:
-            return self.forward_train(xs_pad, ilens, prev_states)
+            return self.forward_train(xs_pad, ilens, prev_states, collect_hid=collect_hid)
         else:
             return self.forward_infer(xs_pad, ilens, prev_states, is_final)
 
@@ -230,6 +232,7 @@ class ContextualBlockConformerEncoder(AbsEncoder):
         xs_pad: torch.Tensor,
         ilens: torch.Tensor,
         prev_states: torch.Tensor = None,
+        collect_hid: bool = False,
     ) -> Tuple[torch.Tensor, torch.Tensor, Optional[torch.Tensor]]:
         """Embed positions in tensor.
 
@@ -347,31 +350,47 @@ class ContextualBlockConformerEncoder(AbsEncoder):
         xs_chunk[:, 1:, 0] = addin[:, 0 : block_num - 1]
         xs_chunk[:, :, self.block_size + 1] = addin
 
+        def copy_output(ys_chunk):
+            ys_pad = xs_pad.new_zeros(xs_pad.size())
+            # first step
+            offset = self.block_size - self.look_ahead - self.hop_size + 1
+            left_idx = 0
+            block_idx = 0
+            cur_hop = self.block_size - self.look_ahead
+            ys_pad[:, left_idx:cur_hop] = ys_chunk[:, block_idx, 1: cur_hop + 1]
+            left_idx += self.hop_size
+            block_idx += 1
+            # following steps
+            while left_idx + self.block_size < total_frame_num and block_idx < block_num:
+                ys_pad[:, cur_hop: cur_hop + self.hop_size] = ys_chunk[:, block_idx, offset: offset + self.hop_size]
+                cur_hop += self.hop_size
+                left_idx += self.hop_size
+                block_idx += 1
+            ys_pad[:, cur_hop:total_frame_num] = ys_chunk[:, block_idx, offset: last_size + 1, :]
+            return ys_pad
+
         # forward
+        intermediate_outs = []
+        if collect_hid: #
+            for layer_idx, layer in enumerate(self.encoders):
+                xs_chunk, mask_online, _, _, _, _, _ = layer(
+                    xs_chunk, mask_online, False, xs_chunk
+                )
+                xs_pad = copy_output(xs_chunk)
+                intermediate_outs.append(xs_pad)
+            if self.normalize_before:
+                xs_pad = self.after_norm(xs_pad)
+                intermediate_outs[-1] = xs_pad
+            olens = masks.squeeze(1).sum(1)
+            return (xs_pad, intermediate_outs), olens, None
+
+
         ys_chunk, mask_online, _, _, _, _, _ = self.encoders(
             xs_chunk, mask_online, False, xs_chunk
         )
 
         # copy output
-        # first step
-        offset = self.block_size - self.look_ahead - self.hop_size + 1
-        left_idx = 0
-        block_idx = 0
-        cur_hop = self.block_size - self.look_ahead
-        ys_pad[:, left_idx:cur_hop] = ys_chunk[:, block_idx, 1 : cur_hop + 1]
-        left_idx += self.hop_size
-        block_idx += 1
-        # following steps
-        while left_idx + self.block_size < total_frame_num and block_idx < block_num:
-            ys_pad[:, cur_hop : cur_hop + self.hop_size] = ys_chunk[
-                :, block_idx, offset : offset + self.hop_size
-            ]
-            cur_hop += self.hop_size
-            left_idx += self.hop_size
-            block_idx += 1
-        ys_pad[:, cur_hop:total_frame_num] = ys_chunk[
-            :, block_idx, offset : last_size + 1, :
-        ]
+        ys_pad = copy_output(ys_chunk)
 
         if self.normalize_before:
             ys_pad = self.after_norm(ys_pad)

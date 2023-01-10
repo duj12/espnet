@@ -101,6 +101,7 @@ class BatchBeamSearchOnline(BatchBeamSearch):
         maxlenratio: float = 0.0,
         minlenratio: float = 0.0,
         is_final: bool = True,
+        **kwargs
     ) -> List[Hypothesis]:
         """Perform beam search.
 
@@ -160,7 +161,7 @@ class BatchBeamSearchOnline(BatchBeamSearch):
                 )
 
             if self.running_hyps is None:
-                self.running_hyps = self.init_hyp(h)
+                self.running_hyps = self.init_hyp(h, **kwargs)
             ret = self.process_one_block(h, block_is_final, maxlen, maxlenratio)
             logging.debug("Finished processing block: %d", self.processed_block)
             self.processed_block += 1

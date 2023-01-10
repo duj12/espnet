@@ -125,3 +125,11 @@ class CTC(torch.nn.Module):
             torch.Tensor: argmax applied 2d tensor (B, Tmax)
         """
         return torch.argmax(self.ctc_lo(hs_pad), dim=2)
+
+    def non_blank_frames(self, hs_pad, min_prob=0):
+        prob = F.softmax(self.ctc_lo(hs_pad), dim=2)
+        prob_max, indices = prob.max(dim=2)
+        if min_prob > 0:
+            mask = prob_max > min_prob
+            indices = indices * mask
+        return indices.nonzero()

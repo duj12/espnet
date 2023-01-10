@@ -7,6 +7,7 @@ import torch
 import torch.nn.functional as F
 
 from espnet.nets.pytorch_backend.nets_utils import make_pad_mask, to_device
+from espnet.nets.pytorch_backend.attentions import AttMoChAstable
 
 
 def _apply_attention_constraint(
@@ -1767,6 +1768,8 @@ def initial_att(
         att = AttMultiHeadMultiResLoc(
             eprojs, dunits, aheads, adim, adim, aconv_chans, aconv_filts, han_mode
         )
+    elif atype == 'MoChA':
+        att = AttMoChAstable(eprojs, dunits, adim, awin)
     return att
 
 

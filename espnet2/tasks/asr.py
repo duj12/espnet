@@ -395,7 +395,7 @@ class ASRTask(AbsTask):
         return retval
 
     @classmethod
-    def build_model(cls, args: argparse.Namespace) -> ESPnetASRModel:
+    def build_model(cls, args: argparse.Namespace, teacher_model=None) -> ESPnetASRModel:
         assert check_argument_types()
         if isinstance(args.token_list, str):
             with open(args.token_list, encoding="utf-8") as f:
@@ -509,6 +509,9 @@ class ASRTask(AbsTask):
             ctc=ctc,
             joint_network=joint_network,
             token_list=token_list,
+            teacher_model=teacher_model,
+            distilling_weight=args.distilling_weight if hasattr(args, "distilling_weight") else None,
+            distilling_module=args.distilling_module if hasattr(args, "distilling_module") else None,
             **args.model_conf,
         )
 

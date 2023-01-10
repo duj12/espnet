@@ -25,6 +25,11 @@ from espnet.nets.pytorch_backend.transformer.label_smoothing_loss import (  # no
     LabelSmoothingLoss,
 )
 
+from espnet.nets.pytorch_backend.revgrad import RevGrad
+from espnet.nets.pytorch_backend.rnn.encoders import RNN
+import argparse
+from espnet.nets.pytorch_backend.nets_utils import make_pad_mask
+
 if V(torch.__version__) >= V("1.6.0"):
     from torch.cuda.amp import autocast
 else:
@@ -33,6 +38,20 @@ else:
     def autocast(enabled=True):
         yield
 
+def check_distilling_args(**kwargs):
+    assert len(kwargs["distilling_module"]) == len(kwargs["distilling_weight"])
+    module_weights = {
+        "encoder": 0,
+        "decoder": 0,
+    }
+    for w, m in zip(kwargs["distilling_weight"], kwargs["distilling_module"]):
+        assert w > 0, w
+        assert m in ["encoder", "decoder"], m
+        module_weights[m] = w
+
+    weight_sum = sum(module_weights.values())
+    module_weights["weight_sum"] = weight_sum
+    return module_weights
 
 class ESPnetASRModel(AbsESPnetModel):
     """CTC-attention hybrid Encoder-Decoder model"""
@@ -60,6 +79,12 @@ class ESPnetASRModel(AbsESPnetModel):
         sym_space: str = "<space>",
         sym_blank: str = "<blank>",
         extract_feats_in_collect_stats: bool = True,
+        teacher_model: AbsESPnetModel = None,
+        distilling_weight: List[float] = None,
+        distilling_module: List[str] = None,
+        additional_tasks: Union[str, List[str]] = None,
+        task_weights: Union[float, List[float]] = 0,
+        **kwargs,
     ):
         assert check_argument_types()
         assert 0.0 <= ctc_weight <= 1.0, ctc_weight
@@ -132,6 +157,27 @@ class ESPnetASRModel(AbsESPnetModel):
             else:
                 self.decoder = decoder
 
+            if teacher_model is not None:
+                distilling_module_weights = check_distilling_args(
+                    distilling_weight=distilling_weight,
+                    distilling_module=distilling_module,
+                )
+                self.distilling_weight = distilling_module_weights
+                if self.distilling_weight["encoder"] > 0:
+                    from espnet2.asr.encoder.hubert_encoder import FairseqHubertEncoder
+                    if isinstance(teacher_model.encoder, FairseqHubertEncoder):
+                        self.fit_dense = torch.nn.Linear(encoder._output_size,
+                                                         teacher_model.encoder.encoders.encoder.embedding_dim)
+                    else:
+                        self.fit_dense = torch.nn.Linear(encoder._output_size, teacher_model.encoder._output_size)
+                if self.distilling_weight["decoder"] + ctc_weight >= 1.0:
+                    self.att_weight = 0
+                else:
+                    self.att_weight = 1.0 - ctc_weight - self.distilling_weight["decoder"]
+            else:
+                self.att_weight = 1.0 - ctc_weight
+            self.teacher = teacher_model
+
             self.criterion_att = LabelSmoothingLoss(
                 size=vocab_size,
                 padding_idx=ignore_id,
@@ -150,6 +196,85 @@ class ESPnetASRModel(AbsESPnetModel):
             self.ctc = ctc
 
         self.extract_feats_in_collect_stats = extract_feats_in_collect_stats
+
+        if isinstance(additional_tasks, str):
+            self.additional_tasks = [additional_tasks]
+        else:
+            self.additional_tasks = additional_tasks
+        if isinstance(task_weights, float):
+            self.task_weights = [task_weights]
+        else:
+            self.task_weights = task_weights
+        if self.additional_tasks:
+            for task, weight in zip(self.additional_tasks, self.task_weights):
+                if weight <= 0:
+                    continue
+                if task == "domain_adversarial":
+                    self.rev_grad = RevGrad()
+                    self.domain_encoder = RNN(encoder.output_size(), 2, 512, 256, 0, typ="blstm")
+                    self.classifier = torch.nn.Sequential(
+                        torch.nn.Linear(256, 128),
+                        torch.nn.ReLU(),
+                        torch.nn.Linear(128, 2, bias=False),
+                    )
+                    self.classifier_criterion = torch.nn.CrossEntropyLoss()
+                elif task == "domain_adapt":
+                    self.domain_mapper = torch.nn.Sequential(
+                        torch.nn.Linear(encoder.output_size(), encoder.output_size()),
+                    )
+                elif task == "mwer":
+                    recog_args = {
+                        'beam_size': 4,
+                        'penalty': 0.0,
+                        'ctc_weight': 0,
+                        'maxlenratio': 0.0,
+                        'minlenratio': 0.0,
+                        'maxbeamratio': 2.5,
+                        'lm_weight': 0,
+                        'rnnlm': None,
+                        'nbest': 4,
+                        'space': sym_space,
+                        'blank': sym_blank
+                    }
+                    self.recog_args = argparse.Namespace(**recog_args)
+                elif task in ["masked_lm_decoder", "masked_lm_distilling"]:
+                    mlm_path = kwargs["masked_lm_path"]
+                    mlm_type = mlm_path.split("/")[-1].split("-")[0]
+                    token2mlm_token = {}
+                    if mlm_type == "bert":
+                        from transformers import AutoTokenizer, BertForPreTraining
+                        self.mlm_tokenizer = AutoTokenizer.from_pretrained(mlm_path)
+                        mlm_model = BertForPreTraining.from_pretrained(mlm_path)
+                        mlm_model.bert.eval()
+                        if task == "masked_lm_decoder":
+                            self.mlm_model = mlm_model
+                            # limit output size -> vocab_size
+                            self.mlm_model.cls.predictions.decoder = torch.nn.Linear(
+                                in_features=self.mlm_model.cls.predictions.decoder.in_features, out_features=vocab_size)
+                        elif task == "masked_lm_distilling":
+                            self.mlm_model = mlm_model.bert
+                            self.bert_to_decoder = torch.nn.Linear(
+                                in_features=self.mlm_model.config.hidden_size,
+                                out_features=decoder.output_layer.in_features,
+                            )
+                    with open(mlm_path + "/vocab.txt", "r") as f:
+                        lines = f.readlines()
+                        mlm_token_id = {line.strip(): i for i, line in enumerate(lines)}
+                        for i, token in enumerate(self.token_list):
+                            if i <= 1:
+                                token2mlm_token[i] = self.mlm_tokenizer.unk_token_id
+                            elif i == vocab_size - 1:
+                                token2mlm_token[i] = self.mlm_tokenizer.sep_token_id
+                            elif token in mlm_token_id:
+                                token2mlm_token[i] = mlm_token_id[token]
+                            else:
+                                logging.warning(f"mapping OOV {token} to {self.mlm_tokenizer.unk_token}")
+                                token2mlm_token[i] = self.mlm_tokenizer.unk_token_id
+
+                        self.token_id2mlm_token_id = token2mlm_token
+
+                else:
+                    raise ValueError(f"unknown task {task}")
 
     def forward(
         self,
@@ -182,7 +307,21 @@ class ESPnetASRModel(AbsESPnetModel):
         text = text[:, : text_lengths.max()]
 
         # 1. Encoder
-        encoder_out, encoder_out_lens = self.encode(speech, speech_lengths)
+        if self.teacher is not None and self.distilling_weight["weight_sum"] > 0 and self.training:
+            speech_copy = speech.clone()
+            speech_lengths_copy = speech_lengths.clone()
+            with torch.no_grad():
+                teacher_encoder_out, teacher_logits = self.teacher.generate_logits(speech_copy, speech_lengths_copy,
+                                                                                   text, text_lengths)
+            if self.distilling_weight["decoder"] == 0.0:
+                teacher_logits = None
+        else:
+            teacher_encoder_out, teacher_logits = None, None
+
+        output_intermediate_layers = True if (
+                self.training and self.teacher is not None and self.distilling_weight["encoder"] > 0) else False
+
+        encoder_out, encoder_out_lens = self.encode(speech, speech_lengths, output_intermediate_layers=output_intermediate_layers)
         intermediate_outs = None
         if isinstance(encoder_out, tuple):
             intermediate_outs = encoder_out[1]
@@ -192,6 +331,16 @@ class ESPnetASRModel(AbsESPnetModel):
         loss_ctc, cer_ctc = None, None
         loss_transducer, cer_transducer, wer_transducer = None, None, None
         stats = dict()
+
+        loss = 0
+        if self.training and self.teacher and self.distilling_weight["encoder"] > 0 and not intermediate_outs is None:
+            for i in range(len(intermediate_outs)):
+                intermediate_outs[i] = self.fit_dense(intermediate_outs[i])
+            loss_encoder_kl = self.distillation_encoder(intermediate_outs, teacher_encoder_out, encoder_out_lens)
+            loss = loss + loss_encoder_kl * self.distilling_weight["encoder"]
+            stats["distill_encoder"] = (loss_encoder_kl.detach() if loss_encoder_kl is not None else None)
+        else:
+            loss_encoder_kl = None
 
         # 1. CTC branch
         if self.ctc_weight != 0.0:
@@ -254,17 +403,42 @@ class ESPnetASRModel(AbsESPnetModel):
         else:
             # 2b. Attention decoder branch
             if self.ctc_weight != 1.0:
-                loss_att, acc_att, cer_att, wer_att = self._calc_att_loss(
-                    encoder_out, encoder_out_lens, text, text_lengths
+                # loss_att, acc_att, cer_att, wer_att = self._calc_att_loss(
+                #     encoder_out, encoder_out_lens, text, text_lengths
+                # )
+                ys_in_pad, ys_out_pad = add_sos_eos(text, self.sos, self.eos, self.ignore_id)
+                ys_in_lens = text_lengths + 1
+                decoder_out, _ = self.decoder(
+                    encoder_out, encoder_out_lens, ys_in_pad, ys_in_lens
                 )
+                loss_att = self.criterion_att(decoder_out, ys_out_pad)
+                acc_att = th_accuracy(
+                    decoder_out.view(-1, self.vocab_size),
+                    ys_out_pad,
+                    ignore_label=self.ignore_id,
+                )
+
+                # Compute cer/wer using attention-decoder
+                if self.training or self.error_calculator is None:
+                    cer_att, wer_att = None, None
+                else:
+                    ys_hat = decoder_out.argmax(dim=-1)
+                    cer_att, wer_att = self.error_calculator(ys_hat.cpu(), text.cpu())
+
+                if self.training and self.teacher and self.distilling_weight["decoder"] > 0 and not teacher_logits is None:
+                    loss_decoder_kl = self.distillation_decoder(decoder_out, teacher_logits, text_lengths)
+                    loss += loss_decoder_kl * self.distilling_weight['decoder']
+                    stats["distill_decoder"] = (loss_decoder_kl.detach() if loss_decoder_kl is not None else None)
+                else:
+                    loss_decoder_kl = None
 
             # 3. CTC-Att loss definition
             if self.ctc_weight == 0.0:
-                loss = loss_att
+                loss += loss_att
             elif self.ctc_weight == 1.0:
-                loss = loss_ctc
+                loss += loss_ctc
             else:
-                loss = self.ctc_weight * loss_ctc + (1 - self.ctc_weight) * loss_att
+                loss += self.ctc_weight * loss_ctc + (1 - self.ctc_weight) * loss_att
 
             # Collect Attn branch stats
             stats["loss_att"] = loss_att.detach() if loss_att is not None else None
@@ -300,7 +474,8 @@ class ESPnetASRModel(AbsESPnetModel):
         return {"feats": feats, "feats_lengths": feats_lengths}
 
     def encode(
-        self, speech: torch.Tensor, speech_lengths: torch.Tensor
+        self, speech: torch.Tensor, speech_lengths: torch.Tensor,
+            **kwargs,
     ) -> Tuple[torch.Tensor, torch.Tensor]:
         """Frontend + Encoder. Note that this method is used by asr_inference.py
 
@@ -308,6 +483,7 @@ class ESPnetASRModel(AbsESPnetModel):
             speech: (Batch, Length, ...)
             speech_lengths: (Batch, )
         """
+        collect_hid = kwargs.get("output_intermediate_layers", False)
         with autocast(False):
             # 1. Extract feats
             feats, feats_lengths = self._extract_feats(speech, speech_lengths)
@@ -331,9 +507,11 @@ class ESPnetASRModel(AbsESPnetModel):
             encoder_out, encoder_out_lens, _ = self.encoder(
                 feats, feats_lengths, ctc=self.ctc
             )
+        elif collect_hid:
+            encoder_out, encoder_out_lens, _ = self.encoder(feats, feats_lengths, **kwargs)
         else:
             encoder_out, encoder_out_lens, _ = self.encoder(feats, feats_lengths)
-        intermediate_outs = None
+        intermediate_outs = []
         if isinstance(encoder_out, tuple):
             intermediate_outs = encoder_out[1]
             encoder_out = encoder_out[0]
@@ -353,7 +531,7 @@ class ESPnetASRModel(AbsESPnetModel):
             encoder_out_lens.max(),
         )
 
-        if intermediate_outs is not None:
+        if len(intermediate_outs) > 0:
             return (encoder_out, intermediate_outs), encoder_out_lens
 
         return encoder_out, encoder_out_lens
@@ -468,6 +646,7 @@ class ESPnetASRModel(AbsESPnetModel):
         encoder_out_lens: torch.Tensor,
         ys_pad: torch.Tensor,
         ys_pad_lens: torch.Tensor,
+        return_logits=False,
     ):
         ys_in_pad, ys_out_pad = add_sos_eos(ys_pad, self.sos, self.eos, self.ignore_id)
         ys_in_lens = ys_pad_lens + 1
@@ -476,6 +655,8 @@ class ESPnetASRModel(AbsESPnetModel):
         decoder_out, _ = self.decoder(
             encoder_out, encoder_out_lens, ys_in_pad, ys_in_lens
         )
+        if return_logits:
+            return decoder_out
 
         # 2. Compute attention loss
         loss_att = self.criterion_att(decoder_out, ys_out_pad)
@@ -591,3 +772,71 @@ class ESPnetASRModel(AbsESPnetModel):
         loss_ctc = self.ctc(encoder_out, encoder_out_lens, text, text_lengths)
         self.ctc.reduce = do_reduce
         return loss_ctc
+
+    def generate_logits(self, speech, speech_lengths, text, text_lengths):
+        self.eval()
+        encoder_out, lengths = self.encode(speech, speech_lengths, output_intermediate_layers=True)
+        if isinstance(encoder_out, tuple):
+            intermediate_outs = encoder_out[1]
+            encoder_out = encoder_out[0]
+        else:
+            intermediate_outs = [encoder_out]
+        logits = self._calc_att_loss(encoder_out, lengths, text, text_lengths, return_logits=True)
+        return intermediate_outs, logits
+
+    def distillation_encoder(self, out_student, out_teacher, xlens):
+        """Compute cross entropy loss for knowledge distillation of sequence-to-sequence models.
+
+        Args:
+            logits_student (FloatTensor): `[B, T, vocab]`
+            logits_teacher (FloatTensor): `[B, T, vocab]`
+            ylens (IntTensor): `[B]`
+            temperature (float):
+        Returns:
+            loss_mean (FloatTensor): `[1]`
+
+        """
+        mask = ~(make_pad_mask(xlens, out_student[0], 1))
+        denorm = xlens.sum()
+        assert len(out_teacher) % len(out_student) == 0, (len(out_student), len(out_student))
+        dist_per_group = len(out_teacher) // len(out_student)
+        loss = 0
+        for i in range(len(out_student)):
+            j = (i + 1) * dist_per_group - 1   # the teacher's layer corresponding to student's i-th layer
+            # align length in time-dimension
+            feat_tsz = out_student[i].size(1)
+            targ_tsz = out_teacher[j].size(1)
+            if feat_tsz != targ_tsz:
+                tar2feat_ratio = float(targ_tsz / feat_tsz)
+                target_inds = (torch.arange(feat_tsz).float() * tar2feat_ratio).long()
+                target_inds[target_inds >= targ_tsz] = targ_tsz - 1
+                out_teacher[j] = out_teacher[j][:, target_inds]  # sampling
+
+            assert out_teacher[j].size(1) == out_student[i].size(1)
+            loss_layer = torch.nn.MSELoss(reduction="none")(out_teacher[j], out_student[i])
+            loss_layer = (loss_layer * mask).sum() / denorm
+            loss += loss_layer
+        return loss
+
+    def distillation_decoder(self, logits_student, logits_teacher, ylens, temperature=1.0):
+        """Compute cross entropy loss for knowledge distillation of sequence-to-sequence models.
+
+        Args:
+            logits_student (FloatTensor): `[B, T, vocab]`
+            logits_teacher (FloatTensor): `[B, T, vocab]`
+            ylens (IntTensor): `[B]`
+            temperature (float):
+        Returns:
+            loss_mean (FloatTensor): `[1]`
+
+        """
+        bs, _, vocab = logits_student.size()
+        mask = ~(make_pad_mask(ylens, logits_student, 1))
+
+        log_probs_student = torch.log_softmax(logits_student, dim=-1)
+        probs_teacher = torch.softmax(logits_teacher / temperature, dim=-1).data
+        loss = -torch.mul(probs_teacher, log_probs_student)
+        loss_mean = (loss * mask).sum() / bs
+        return loss_mean
+
+
