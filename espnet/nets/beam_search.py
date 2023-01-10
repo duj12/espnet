@@ -33,7 +33,6 @@ class BeamSearch(torch.nn.Module):
     def __init__(
         self,
         scorers: Dict[str, ScorerInterface],
-        rescorers: Dict[str, RescorerInterface],
         weights: Dict[str, float],
         beam_size: int,
         vocab_size: int,
@@ -42,6 +41,7 @@ class BeamSearch(torch.nn.Module):
         token_list: List[str] = None,
         pre_beam_ratio: float = 1.5,
         pre_beam_score_key: str = None,
+        rescorers: Dict[str, RescorerInterface] = None,
     ):
         """Initialize beam search.
 
@@ -86,12 +86,13 @@ class BeamSearch(torch.nn.Module):
                 self.nn_dict[k] = v
 
         self.rescorers = dict()
-        for k, v in rescorers.items():
-            w = weights.get(k, 0)
-            if w == 0 or v is None:
-                continue
-            assert isinstance(v, BatchRescorerInterface), f"{k} ({type(v)}) does not implement BatchRescorerInterface"
-            self.rescorers[k] = v
+        if not rescorers is None:
+            for k, v in rescorers.items():
+                w = weights.get(k, 0)
+                if w == 0 or v is None:
+                    continue
+                assert isinstance(v, BatchRescorerInterface), f"{k} ({type(v)}) does not implement BatchRescorerInterface"
+                self.rescorers[k] = v
 
         # set configurations
         self.sos = sos

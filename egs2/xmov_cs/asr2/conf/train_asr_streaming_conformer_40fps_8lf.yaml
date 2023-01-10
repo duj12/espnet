@@ -20,9 +20,9 @@ encoder_conf:
     macaron_style: true
     use_cnn_module: true
     cnn_module_kernel: 15
-    block_size: 24      # streaming configuration
-    hop_size: 10        # streaming configuration
-    look_ahead: 4      # streaming configuration
+    block_size: 40  #24    # streaming configuration
+    hop_size: 16  #10     # streaming configuration
+    look_ahead: 8  #4      # streaming configuration
     init_average: true  # streaming configuration
     ctx_pos_enc: true   # streaming configuration
 
