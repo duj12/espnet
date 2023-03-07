@@ -1,8 +1,8 @@
 beam_size: 10
-penalty: 0.0
+penalty: 0.6  # balance insertion and deletion
 maxlenratio: 0.0
 minlenratio: 0.0
-ctc_weight: 0.6
+ctc_weight: 0.5
 lm_weight: 0.3
 sim_chunk_length: 512
 disable_repetition_detection: true

@@ -51,7 +51,7 @@ batch_size: 256
 num_iters_per_epoch: 40000  # save ckpt every N steps
 accum_grad: 4
 grad_clip: 5
-patience: 10
+patience: 20
 max_epoch: 100
 val_scheduler_criterion:
     - valid

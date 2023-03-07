@@ -8,14 +8,14 @@ lm_conf:
     layer: 16
     dropout_rate: 0.1
 
-num_workers: 0
+num_workers: 1
 # optimization related
 grad_clip: 5.0
 #batch_type: folded
 #batch_size: 400   # batch size in LM training
 batch_type: numel
-batch_bins: 2400000000  # for 4 A-100 
-accum_grad: 16
+batch_bins: 2000000000  # for 4 A-100
+accum_grad: 4
 max_epoch: 100
 patience: 20
 

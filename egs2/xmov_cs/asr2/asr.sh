@@ -1083,6 +1083,10 @@ if ! "${skip_train}"; then
         if [ "${feats_normalize}" = global_mvn ]; then
             # Default normalization is utterance_mvn and changes to global_mvn
             _opts+="--normalize=global_mvn --normalize_conf stats_file=${asr_stats_dir}/train/feats_stats.npz "
+        elif [ "${feats_normalize}" = utterance_mvn ]; then
+             _opts+="--normalize=utterance_mvn "
+        elif [  "${feats_normalize}" = none ]; then
+            _opts+="--normalize=none "
         fi
 
         if [ "${num_splits_asr}" -gt 1 ]; then
