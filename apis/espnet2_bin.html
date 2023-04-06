@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>core tools (espnet2) &mdash; ESPnet 202211 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>core tools (espnet2) &mdash; ESPnet 202301 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -29,14 +29,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> ESPnet
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ESPnet
           </a>
               <div class="version">
-                202211
+                202301
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -46,7 +50,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../parallelization.html">Using Job scheduling system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parallelization.html">Using job scheduling system</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../docker.html">Docker</a></li>
 </ul>
@@ -55,6 +59,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../espnet2_tutorial.html">ESPnet2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../espnet2_tutorial.html#instruction-for-run-sh">Instruction for run.sh</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../espnet2_training_option.html">Change the configuration for training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../espnet2_format_wav_scp.html">Converting audio file formats using format_wav_scp.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../espnet2_task.html">Task class and data input system for training</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../espnet2_distributed.html">Distributed training</a></li>
 </ul>
@@ -62,6 +67,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../notebook/asr_cli.html">Speech Recognition (Recipe)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../notebook/asr_library.html">Speech Recognition (Library)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebook/espnet2_2pass_slu_demo.html">ESPNET 2 pass SLU Demonstration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../notebook/espnet2_asr_realtime_demo.html">ESPnet2-ASR realtime demonstration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../notebook/espnet2_asr_transfer_learning_demo.html"><strong>Use transfer learning for ASR in ESPnet2</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../notebook/espnet2_asr_transfer_learning_demo.html#Abstract">Abstract</a></li>
@@ -98,81 +104,81 @@
 </ul>
 <p><span class="caption-text">Package Reference:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet.optimizer.html">espnet.optimizer package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../_gen/espnet.mt.html">espnet.mt package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet.transform.html">espnet.transform package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet.nets.html">espnet.nets package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../_gen/espnet.bin.html">espnet.bin package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet.st.html">espnet.st package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../_gen/espnet.vc.html">espnet.vc package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../_gen/espnet.tts.html">espnet.tts package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet.asr.html">espnet.asr package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet.nets.html">espnet.nets package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet.optimizer.html">espnet.optimizer package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../_gen/espnet.utils.html">espnet.utils package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet.scheduler.html">espnet.scheduler package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet.transform.html">espnet.transform package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet.lm.html">espnet.lm package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet.st.html">espnet.st package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet.asr.html">espnet.asr package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../_gen/espnet.distributed.html">espnet.distributed package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.fileio.html">espnet2.fileio package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.gan_svs.html">espnet2.gan_svs package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.main_funcs.html">espnet2.main_funcs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet.scheduler.html">espnet.scheduler package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet.lm.html">espnet.lm package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.mt.html">espnet2.mt package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.layers.html">espnet2.layers package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.iterators.html">espnet2.iterators package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.optimizers.html">espnet2.optimizers package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.fst.html">espnet2.fst package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.bin.html">espnet2.bin package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.slu.html">espnet2.slu package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.tts.html">espnet2.tts package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.asr.html">espnet2.asr package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.samplers.html">espnet2.samplers package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.utils.html">espnet2.utils package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.asr_transducer.html">espnet2.asr_transducer package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.svs.html">espnet2.svs package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.diar.html">espnet2.diar package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.hubert.html">espnet2.hubert package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.schedulers.html">espnet2.schedulers package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.text.html">espnet2.text package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.enh.html">espnet2.enh package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.lm.html">espnet2.lm package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.st.html">espnet2.st package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.tasks.html">espnet2.tasks package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.hubert.html">espnet2.hubert package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.torch_utils.html">espnet2.torch_utils package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.train.html">espnet2.train package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.main_funcs.html">espnet2.main_funcs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.optimizers.html">espnet2.optimizers package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.samplers.html">espnet2.samplers package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.slu.html">espnet2.slu package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.bin.html">espnet2.bin package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.diar.html">espnet2.diar package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.st.html">espnet2.st package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.uasr.html">espnet2.uasr package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.iterators.html">espnet2.iterators package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.enh.html">espnet2.enh package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.svs.html">espnet2.svs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.tts.html">espnet2.tts package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.gan_svs.html">espnet2.gan_svs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.fst.html">espnet2.fst package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.gan_tts.html">espnet2.gan_tts package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.train.html">espnet2.train package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.utils.html">espnet2.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.fileio.html">espnet2.fileio package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.tasks.html">espnet2.tasks package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.asr.html">espnet2.asr package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.asr_transducer.html">espnet2.asr_transducer package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.layers.html">espnet2.layers package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.schedulers.html">espnet2.schedulers package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_gen/espnet2.lm.html">espnet2.lm package</a></li>
 </ul>
 <p><span class="caption-text">Tool Reference:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="espnet_bin.html">core tools</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">core tools (espnet2)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#aggregate-stats-dirs-py">aggregate_stats_dirs.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#asr-align-py">asr_align.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#asr-inference-streaming-py">asr_inference_streaming.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#asr-train-py">asr_train.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#asr-transducer-inference-py">asr_transducer_inference.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#asr-transducer-train-py">asr_transducer_train.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#diar-inference-py">diar_inference.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#diar-train-py">diar_train.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#enh-inference-py">enh_inference.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#enh-s2t-train-py">enh_s2t_train.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#enh-scoring-py">enh_scoring.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#enh-train-py">enh_train.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#enh-tse-inference-py">enh_tse_inference.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#enh-tse-train-py">enh_tse_train.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gan-svs-train-py">gan_svs_train.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gan-tts-train-py">gan_tts_train.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#hubert-train-py">hubert_train.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#hugging-face-export-vocabulary-py">hugging_face_export_vocabulary.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#launch-py">launch.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#lm-calc-perplexity-py">lm_calc_perplexity.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#lm-train-py">lm_train.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#mt-inference-py">mt_inference.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#mt-train-py">mt_train.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#pack-py">pack.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#split-scps-py">split_scps.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#st-inference-py">st_inference.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#st-train-py">st_train.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#tokenize-text-py">tokenize_text.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#tts-inference-py">tts_inference.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#tts-train-py">tts_train.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#aggregate-stats-dirs-py-1">aggregate_stats_dirs.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#asr-align-py-1">asr_align.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#asr-inference-streaming-py-1">asr_inference_streaming.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#asr-train-py-1">asr_train.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#asr-transducer-inference-py-1">asr_transducer_inference.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#asr-transducer-train-py-1">asr_transducer_train.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#diar-inference-py-1">diar_inference.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#diar-train-py-1">diar_train.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#enh-inference-py-1">enh_inference.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#enh-s2t-train-py-1">enh_s2t_train.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#enh-scoring-py-1">enh_scoring.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#enh-train-py-1">enh_train.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#enh-tse-inference-py-1">enh_tse_inference.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#enh-tse-train-py-1">enh_tse_train.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gan-svs-train-py-1">gan_svs_train.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gan-tts-train-py-1">gan_tts_train.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hubert-train-py-1">hubert_train.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hugging-face-export-vocabulary-py-1">hugging_face_export_vocabulary.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#launch-py-1">launch.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lm-calc-perplexity-py-1">lm_calc_perplexity.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lm-train-py-1">lm_train.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mt-inference-py-1">mt_inference.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mt-train-py-1">mt_train.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pack-py-1">pack.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#split-scps-py-1">split_scps.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#st-inference-py-1">st_inference.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#st-train-py-1">st_train.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tts-inference-py-1">tts_inference.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tts-train-py-1">tts_train.py</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="utils_py.html">python utility tools</a></li>
@@ -192,7 +198,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">core tools (espnet2)</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/apis/espnet2_bin.rst.txt" rel="nofollow"> View page source</a>
@@ -203,35 +209,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="core-tools-espnet2">
-<span id="id1"></span><h1>core tools (espnet2)<a class="headerlink" href="#core-tools-espnet2" title="Permalink to this headline">¶</a></h1>
+  <section id="core-tools-espnet2-1">
+<span id="core-tools-espnet2"></span><h1>core tools (espnet2)<a class="headerlink" href="#core-tools-espnet2-1" title="Permalink to this headline">¶</a></h1>
 <p>ESPnet2 provides several command-line tools for training and evaluating neural networks (NN) under <code class="docutils literal notranslate"><span class="pre">espnet2/bin</span></code>:</p>
-<section id="aggregate-stats-dirs-py">
-<span id="id2"></span><h2>aggregate_stats_dirs.py<a class="headerlink" href="#aggregate-stats-dirs-py" title="Permalink to this headline">¶</a></h2>
+<section id="aggregate-stats-dirs-py-1">
+<span id="aggregate-stats-dirs-py"></span><h2>aggregate_stats_dirs.py<a class="headerlink" href="#aggregate-stats-dirs-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: aggregate_stats_dirs.py [-h]
                                [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
                                [--skip_sum_stats] [--input_dir INPUT_DIR]
@@ -250,8 +232,8 @@ optional arguments:
 </pre></div>
 </div>
 </section>
-<section id="asr-align-py">
-<span id="id3"></span><h2>asr_align.py<a class="headerlink" href="#asr-align-py" title="Permalink to this headline">¶</a></h2>
+<section id="asr-align-py-1">
+<span id="asr-align-py"></span><h2>asr_align.py<a class="headerlink" href="#asr-align-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[nltk_data] Downloading package averaged_perceptron_tagger to
 [nltk_data]     /home/runner/nltk_data...
 [nltk_data]   Unzipping taggers/averaged_perceptron_tagger.zip.
@@ -353,8 +335,8 @@ Input/output arguments:
 </pre></div>
 </div>
 </section>
-<section id="asr-inference-streaming-py">
-<span id="id4"></span><h2>asr_inference_streaming.py<a class="headerlink" href="#asr-inference-streaming-py" title="Permalink to this headline">¶</a></h2>
+<section id="asr-inference-streaming-py-1">
+<span id="asr-inference-streaming-py"></span><h2>asr_inference_streaming.py<a class="headerlink" href="#asr-inference-streaming-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: asr_inference_streaming.py [-h] [--config CONFIG]
                                   [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
                                   --output_dir OUTPUT_DIR [--ngpu NGPU]
@@ -451,8 +433,8 @@ Text converter related:
 </pre></div>
 </div>
 </section>
-<section id="asr-train-py">
-<span id="id5"></span><h2>asr_train.py<a class="headerlink" href="#asr-train-py" title="Permalink to this headline">¶</a></h2>
+<section id="asr-train-py-1">
+<span id="asr-train-py"></span><h2>asr_train.py<a class="headerlink" href="#asr-train-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: asr_train.py [-h] [--config CONFIG] [--print_config]
                     [--log_level {ERROR,WARNING,INFO,DEBUG,NOTSET}]
                     [--dry_run DRY_RUN]
@@ -513,12 +495,15 @@ Text converter related:
                     [--chunk_length CHUNK_LENGTH]
                     [--chunk_shift_ratio CHUNK_SHIFT_RATIO]
                     [--num_cache_chunks NUM_CACHE_CHUNKS]
+                    [--chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]]
                     [--train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE]
                     [--valid_data_path_and_name_and_type VALID_DATA_PATH_AND_NAME_AND_TYPE]
                     [--allow_variable_data_keys ALLOW_VARIABLE_DATA_KEYS]
                     [--max_cache_size MAX_CACHE_SIZE]
                     [--max_cache_fd MAX_CACHE_FD]
                     [--valid_max_cache_size VALID_MAX_CACHE_SIZE]
+                    [--exclude_weight_decay EXCLUDE_WEIGHT_DECAY]
+                    [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                     [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                     [--optim_conf OPTIM_CONF]
                     [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
@@ -528,10 +513,10 @@ Text converter related:
                     [--input_size INPUT_SIZE] [--ctc_conf CTC_CONF]
                     [--joint_net_conf JOINT_NET_CONF]
                     [--use_preprocessor USE_PREPROCESSOR]
-                    [--token_type {bpe,char,word,phn,hugging_face}]
+                    [--token_type {bpe,char,word,phn,hugging_face,whisper_en,whisper_multilingual}]
                     [--bpemodel BPEMODEL]
                     [--non_linguistic_symbols NON_LINGUISTIC_SYMBOLS]
-                    [--cleaner {None,tacotron,jaconv,vietnamese}]
+                    [--cleaner {None,tacotron,jaconv,vietnamese,whisper_en,whisper_basic}]
                     [--g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,pypinyin_g2p_phone_without_prosody,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,espeak_ng_italian,espeak_ng_ukrainian,espeak_ng_polish,g2pk,g2pk_no_space,g2pk_explicit_space,korean_jaso,korean_jaso_no_space,g2p_is}]
                     [--speech_volume_normalize SPEECH_VOLUME_NORMALIZE]
                     [--rir_scp RIR_SCP] [--rir_apply_prob RIR_APPLY_PROB]
@@ -539,7 +524,8 @@ Text converter related:
                     [--noise_apply_prob NOISE_APPLY_PROB]
                     [--noise_db_range NOISE_DB_RANGE]
                     [--short_noise_thres SHORT_NOISE_THRES]
-                    [--frontend {default,sliding_window,s3prl,fused}]
+                    [--aux_ctc_tasks AUX_CTC_TASKS [AUX_CTC_TASKS ...]]
+                    [--frontend {default,sliding_window,s3prl,fused,whisper}]
                     [--frontend_conf FRONTEND_CONF] [--specaug {specaug,None}]
                     [--specaug_conf SPECAUG_CONF]
                     [--normalize {global_mvn,utterance_mvn,None}]
@@ -548,11 +534,11 @@ Text converter related:
                     [--model_conf MODEL_CONF]
                     [--preencoder {sinc,linear,None}]
                     [--preencoder_conf PREENCODER_CONF]
-                    [--encoder {conformer,transformer,transformer_multispkr,contextual_block_transformer,contextual_block_conformer,vgg_rnn,rnn,wav2vec2,hubert,hubert_pretrain,longformer,branchformer,e_branchformer}]
+                    [--encoder {conformer,transformer,transformer_multispkr,contextual_block_transformer,contextual_block_conformer,vgg_rnn,rnn,wav2vec2,hubert,hubert_pretrain,torchaudiohubert,longformer,branchformer,whisper,e_branchformer}]
                     [--encoder_conf ENCODER_CONF]
                     [--postencoder {hugging_face_transformers,None}]
                     [--postencoder_conf POSTENCODER_CONF]
-                    [--decoder {transformer,lightweight_conv,lightweight_conv2d,dynamic_conv,dynamic_conv2d,rnn,transducer,mlm,hugging_face_transformers}]
+                    [--decoder {transformer,lightweight_conv,lightweight_conv2d,dynamic_conv,dynamic_conv2d,rnn,transducer,mlm,whisper,hugging_face_transformers,s4,None}]
                     [--decoder_conf DECODER_CONF]
                     [--preprocessor {default,multi}]
                     [--preprocessor_conf PREPROCESSOR_CONF]
@@ -767,6 +753,10 @@ Chunk iterator related:
                         Specify the shift width of chunks. If it&#39;s less than 1, allows the overlapping and if bigger than 1, there are some gaps between each chunk. (default: 0.5)
   --num_cache_chunks NUM_CACHE_CHUNKS
                         Shuffle in the specified number of chunks and generate mini-batches More larger this value, more randomness can be obtained. (default: 1024)
+  --chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]
+                        List of key prefixes. Keys that satisfy either condition below will be excluded from the length consistency check in ChunkIterFactory:
+                          - exactly match one of the prefixes in `chunk_excluded_key_prefixes`
+                          - have one of the prefixes in `chunk_excluded_key_prefixes` and end with numbers (default: [])
 
 Dataset related:
   --train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE
@@ -777,6 +767,13 @@ Dataset related:
 
                            utterance_id_a a.wav
                            utterance_id_b b.wav
+                           ...
+
+                        &quot;multi_columns_sound&quot;:
+                        Enable multi columns wav.scp. The following text file can be loaded as multi channels audio data
+
+                           utterance_id_a a.wav a2.wav
+                           utterance_id_b b.wav b2.wav
                            ...
 
                         &quot;score&quot;:
@@ -843,6 +840,13 @@ Dataset related:
                            utterance_id_B foo bar
                            ...
 
+                        &quot;random_text&quot;:
+                        Return text as is. The text must be converted to ndarray by &#39;preprocess&#39;.
+
+                           hello world
+                           foo bar
+                           ...
+
                         &quot;hdf5&quot;:
                         A HDF5 file which contains arrays at the first level or the second level.   &gt;&gt;&gt; f = h5py.File(&#39;file.h5&#39;)
                            &gt;&gt;&gt; array1 = f[&#39;utterance_id_A&#39;]
@@ -880,6 +884,10 @@ Dataset related:
                         The maximum cache size for validation data loader. e.g. 10MB, 20GB. If None, the 5 percent size of --max_cache_size (default: None)
 
 Optimizer related:
+  --exclude_weight_decay EXCLUDE_WEIGHT_DECAY
+                        Exclude weight decay in optimizer for model bias, normalization, or other special parameters (default: False)
+  --exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF
+                        The keyword arguments for configuring weight decay in optimizer. e.g., &#39;bias_weight_decay&#39;: False will set zero weight decay for bias params. See also espnet2.optimizers.optim_groups.configure_optimizer. (default: {})
   --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}
                         The optimizer type (default: adadelta)
   --optim_conf OPTIM_CONF
@@ -905,10 +913,10 @@ Optimizer related:
 
   --use_preprocessor USE_PREPROCESSOR
                         Apply preprocessing to data or not (default: True)
-  --token_type {bpe,char,word,phn,hugging_face}
+  --token_type {bpe,char,word,phn,hugging_face,whisper_en,whisper_multilingual}
                         The text will be tokenized in the specified level token (default: bpe)
   --bpemodel BPEMODEL   The model file of sentencepiece (default: None)
-  --cleaner {None,tacotron,jaconv,vietnamese}
+  --cleaner {None,tacotron,jaconv,vietnamese,whisper_en,whisper_basic}
                         Apply text cleaning (default: None)
   --g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,pypinyin_g2p_phone_without_prosody,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,espeak_ng_italian,espeak_ng_ukrainian,espeak_ng_polish,g2pk,g2pk_no_space,g2pk_explicit_space,korean_jaso,korean_jaso_no_space,g2p_is}
                         Specify g2p method if --token_type=phn (default: None)
@@ -925,7 +933,9 @@ Optimizer related:
                         The range of noise decibel level. (default: 13_15)
   --short_noise_thres SHORT_NOISE_THRES
                         If len(noise) / len(speech) is smaller than this threshold during dynamic mixing, a warning will be displayed. (default: 0.5)
-  --frontend {default,sliding_window,s3prl,fused}
+  --aux_ctc_tasks AUX_CTC_TASKS [AUX_CTC_TASKS ...]
+                        Auxillary tasks to train on using CTC loss.  (default: [])
+  --frontend {default,sliding_window,s3prl,fused,whisper}
                         The frontend type (default: default)
   --frontend_conf FRONTEND_CONF
                         The keyword arguments for frontend (default: {})
@@ -945,7 +955,7 @@ Optimizer related:
                         The preencoder type (default: None)
   --preencoder_conf PREENCODER_CONF
                         The keyword arguments for preencoder (default: {})
-  --encoder {conformer,transformer,transformer_multispkr,contextual_block_transformer,contextual_block_conformer,vgg_rnn,rnn,wav2vec2,hubert,hubert_pretrain,longformer,branchformer,e_branchformer}
+  --encoder {conformer,transformer,transformer_multispkr,contextual_block_transformer,contextual_block_conformer,vgg_rnn,rnn,wav2vec2,hubert,hubert_pretrain,torchaudiohubert,longformer,branchformer,whisper,e_branchformer}
                         The encoder type (default: rnn)
   --encoder_conf ENCODER_CONF
                         The keyword arguments for encoder (default: {})
@@ -953,8 +963,8 @@ Optimizer related:
                         The postencoder type (default: None)
   --postencoder_conf POSTENCODER_CONF
                         The keyword arguments for postencoder (default: {})
-  --decoder {transformer,lightweight_conv,lightweight_conv2d,dynamic_conv,dynamic_conv2d,rnn,transducer,mlm,hugging_face_transformers}
-                        The decoder type (default: rnn)
+  --decoder {transformer,lightweight_conv,lightweight_conv2d,dynamic_conv,dynamic_conv2d,rnn,transducer,mlm,whisper,hugging_face_transformers,s4,None}
+                        The decoder type (default: None)
   --decoder_conf DECODER_CONF
                         The keyword arguments for decoder (default: {})
   --preprocessor {default,multi}
@@ -964,8 +974,8 @@ Optimizer related:
 </pre></div>
 </div>
 </section>
-<section id="asr-transducer-inference-py">
-<span id="id6"></span><h2>asr_transducer_inference.py<a class="headerlink" href="#asr-transducer-inference-py" title="Permalink to this headline">¶</a></h2>
+<section id="asr-transducer-inference-py-1">
+<span id="asr-transducer-inference-py"></span><h2>asr_transducer_inference.py<a class="headerlink" href="#asr-transducer-inference-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: asr_transducer_inference.py [-h] [--config CONFIG]
                                    [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
                                    --output_dir OUTPUT_DIR [--ngpu NGPU]
@@ -1075,8 +1085,8 @@ Text converter related:
 </pre></div>
 </div>
 </section>
-<section id="asr-transducer-train-py">
-<span id="id7"></span><h2>asr_transducer_train.py<a class="headerlink" href="#asr-transducer-train-py" title="Permalink to this headline">¶</a></h2>
+<section id="asr-transducer-train-py-1">
+<span id="asr-transducer-train-py"></span><h2>asr_transducer_train.py<a class="headerlink" href="#asr-transducer-train-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: asr_transducer_train.py [-h] [--config CONFIG] [--print_config]
                                [--log_level {ERROR,WARNING,INFO,DEBUG,NOTSET}]
                                [--dry_run DRY_RUN]
@@ -1145,12 +1155,15 @@ Text converter related:
                                [--chunk_length CHUNK_LENGTH]
                                [--chunk_shift_ratio CHUNK_SHIFT_RATIO]
                                [--num_cache_chunks NUM_CACHE_CHUNKS]
+                               [--chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]]
                                [--train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE]
                                [--valid_data_path_and_name_and_type VALID_DATA_PATH_AND_NAME_AND_TYPE]
                                [--allow_variable_data_keys ALLOW_VARIABLE_DATA_KEYS]
                                [--max_cache_size MAX_CACHE_SIZE]
                                [--max_cache_fd MAX_CACHE_FD]
                                [--valid_max_cache_size VALID_MAX_CACHE_SIZE]
+                               [--exclude_weight_decay EXCLUDE_WEIGHT_DECAY]
+                               [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                                [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                                [--optim_conf OPTIM_CONF]
                                [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
@@ -1389,6 +1402,10 @@ Chunk iterator related:
                         Specify the shift width of chunks. If it&#39;s less than 1, allows the overlapping and if bigger than 1, there are some gaps between each chunk. (default: 0.5)
   --num_cache_chunks NUM_CACHE_CHUNKS
                         Shuffle in the specified number of chunks and generate mini-batches More larger this value, more randomness can be obtained. (default: 1024)
+  --chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]
+                        List of key prefixes. Keys that satisfy either condition below will be excluded from the length consistency check in ChunkIterFactory:
+                          - exactly match one of the prefixes in `chunk_excluded_key_prefixes`
+                          - have one of the prefixes in `chunk_excluded_key_prefixes` and end with numbers (default: [])
 
 Dataset related:
   --train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE
@@ -1399,6 +1416,13 @@ Dataset related:
 
                            utterance_id_a a.wav
                            utterance_id_b b.wav
+                           ...
+
+                        &quot;multi_columns_sound&quot;:
+                        Enable multi columns wav.scp. The following text file can be loaded as multi channels audio data
+
+                           utterance_id_a a.wav a2.wav
+                           utterance_id_b b.wav b2.wav
                            ...
 
                         &quot;score&quot;:
@@ -1465,6 +1489,13 @@ Dataset related:
                            utterance_id_B foo bar
                            ...
 
+                        &quot;random_text&quot;:
+                        Return text as is. The text must be converted to ndarray by &#39;preprocess&#39;.
+
+                           hello world
+                           foo bar
+                           ...
+
                         &quot;hdf5&quot;:
                         A HDF5 file which contains arrays at the first level or the second level.   &gt;&gt;&gt; f = h5py.File(&#39;file.h5&#39;)
                            &gt;&gt;&gt; array1 = f[&#39;utterance_id_A&#39;]
@@ -1502,6 +1533,10 @@ Dataset related:
                         The maximum cache size for validation data loader. e.g. 10MB, 20GB. If None, the 5 percent size of --max_cache_size (default: None)
 
 Optimizer related:
+  --exclude_weight_decay EXCLUDE_WEIGHT_DECAY
+                        Exclude weight decay in optimizer for model bias, normalization, or other special parameters (default: False)
+  --exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF
+                        The keyword arguments for configuring weight decay in optimizer. e.g., &#39;bias_weight_decay&#39;: False will set zero weight decay for bias params. See also espnet2.optimizers.optim_groups.configure_optimizer. (default: {})
   --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}
                         The optimizer type (default: adadelta)
   --optim_conf OPTIM_CONF
@@ -1568,8 +1603,8 @@ Optimizer related:
 </pre></div>
 </div>
 </section>
-<section id="diar-inference-py">
-<span id="id8"></span><h2>diar_inference.py<a class="headerlink" href="#diar-inference-py" title="Permalink to this headline">¶</a></h2>
+<section id="diar-inference-py-1">
+<span id="diar-inference-py"></span><h2>diar_inference.py<a class="headerlink" href="#diar-inference-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: diar_inference.py [-h] [--config CONFIG]
                          [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
                          --output_dir OUTPUT_DIR [--ngpu NGPU] [--seed SEED]
@@ -1650,8 +1685,8 @@ Enh + Diar related:
 </pre></div>
 </div>
 </section>
-<section id="diar-train-py">
-<span id="id9"></span><h2>diar_train.py<a class="headerlink" href="#diar-train-py" title="Permalink to this headline">¶</a></h2>
+<section id="diar-train-py-1">
+<span id="diar-train-py"></span><h2>diar_train.py<a class="headerlink" href="#diar-train-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: diar_train.py [-h] [--config CONFIG] [--print_config]
                      [--log_level {ERROR,WARNING,INFO,DEBUG,NOTSET}]
                      [--dry_run DRY_RUN]
@@ -1712,12 +1747,15 @@ Enh + Diar related:
                      [--chunk_length CHUNK_LENGTH]
                      [--chunk_shift_ratio CHUNK_SHIFT_RATIO]
                      [--num_cache_chunks NUM_CACHE_CHUNKS]
+                     [--chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]]
                      [--train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE]
                      [--valid_data_path_and_name_and_type VALID_DATA_PATH_AND_NAME_AND_TYPE]
                      [--allow_variable_data_keys ALLOW_VARIABLE_DATA_KEYS]
                      [--max_cache_size MAX_CACHE_SIZE]
                      [--max_cache_fd MAX_CACHE_FD]
                      [--valid_max_cache_size VALID_MAX_CACHE_SIZE]
+                     [--exclude_weight_decay EXCLUDE_WEIGHT_DECAY]
+                     [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                      [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                      [--optim_conf OPTIM_CONF]
                      [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
@@ -1946,6 +1984,10 @@ Chunk iterator related:
                         Specify the shift width of chunks. If it&#39;s less than 1, allows the overlapping and if bigger than 1, there are some gaps between each chunk. (default: 0.5)
   --num_cache_chunks NUM_CACHE_CHUNKS
                         Shuffle in the specified number of chunks and generate mini-batches More larger this value, more randomness can be obtained. (default: 1024)
+  --chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]
+                        List of key prefixes. Keys that satisfy either condition below will be excluded from the length consistency check in ChunkIterFactory:
+                          - exactly match one of the prefixes in `chunk_excluded_key_prefixes`
+                          - have one of the prefixes in `chunk_excluded_key_prefixes` and end with numbers (default: [])
 
 Dataset related:
   --train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE
@@ -1956,6 +1998,13 @@ Dataset related:
 
                            utterance_id_a a.wav
                            utterance_id_b b.wav
+                           ...
+
+                        &quot;multi_columns_sound&quot;:
+                        Enable multi columns wav.scp. The following text file can be loaded as multi channels audio data
+
+                           utterance_id_a a.wav a2.wav
+                           utterance_id_b b.wav b2.wav
                            ...
 
                         &quot;score&quot;:
@@ -2022,6 +2071,13 @@ Dataset related:
                            utterance_id_B foo bar
                            ...
 
+                        &quot;random_text&quot;:
+                        Return text as is. The text must be converted to ndarray by &#39;preprocess&#39;.
+
+                           hello world
+                           foo bar
+                           ...
+
                         &quot;hdf5&quot;:
                         A HDF5 file which contains arrays at the first level or the second level.   &gt;&gt;&gt; f = h5py.File(&#39;file.h5&#39;)
                            &gt;&gt;&gt; array1 = f[&#39;utterance_id_A&#39;]
@@ -2059,6 +2115,10 @@ Dataset related:
                         The maximum cache size for validation data loader. e.g. 10MB, 20GB. If None, the 5 percent size of --max_cache_size (default: None)
 
 Optimizer related:
+  --exclude_weight_decay EXCLUDE_WEIGHT_DECAY
+                        Exclude weight decay in optimizer for model bias, normalization, or other special parameters (default: False)
+  --exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF
+                        The keyword arguments for configuring weight decay in optimizer. e.g., &#39;bias_weight_decay&#39;: False will set zero weight decay for bias params. See also espnet2.optimizers.optim_groups.configure_optimizer. (default: {})
   --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}
                         The optimizer type (default: adadelta)
   --optim_conf OPTIM_CONF
@@ -2112,8 +2172,8 @@ Optimizer related:
 </pre></div>
 </div>
 </section>
-<section id="enh-inference-py">
-<span id="id10"></span><h2>enh_inference.py<a class="headerlink" href="#enh-inference-py" title="Permalink to this headline">¶</a></h2>
+<section id="enh-inference-py-1">
+<span id="enh-inference-py"></span><h2>enh_inference.py<a class="headerlink" href="#enh-inference-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: enh_inference.py [-h] [--config CONFIG]
                         [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
                         --output_dir OUTPUT_DIR [--ngpu NGPU] [--seed SEED]
@@ -2197,8 +2257,8 @@ SeparateSpeech related:
 </pre></div>
 </div>
 </section>
-<section id="enh-s2t-train-py">
-<span id="id11"></span><h2>enh_s2t_train.py<a class="headerlink" href="#enh-s2t-train-py" title="Permalink to this headline">¶</a></h2>
+<section id="enh-s2t-train-py-1">
+<span id="enh-s2t-train-py"></span><h2>enh_s2t_train.py<a class="headerlink" href="#enh-s2t-train-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: enh_s2t_train.py [-h] [--config CONFIG] [--print_config]
                         [--log_level {ERROR,WARNING,INFO,DEBUG,NOTSET}]
                         [--dry_run DRY_RUN]
@@ -2262,12 +2322,15 @@ SeparateSpeech related:
                         [--chunk_length CHUNK_LENGTH]
                         [--chunk_shift_ratio CHUNK_SHIFT_RATIO]
                         [--num_cache_chunks NUM_CACHE_CHUNKS]
+                        [--chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]]
                         [--train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE]
                         [--valid_data_path_and_name_and_type VALID_DATA_PATH_AND_NAME_AND_TYPE]
                         [--allow_variable_data_keys ALLOW_VARIABLE_DATA_KEYS]
                         [--max_cache_size MAX_CACHE_SIZE]
                         [--max_cache_fd MAX_CACHE_FD]
                         [--valid_max_cache_size VALID_MAX_CACHE_SIZE]
+                        [--exclude_weight_decay EXCLUDE_WEIGHT_DECAY]
+                        [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                         [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                         [--optim_conf OPTIM_CONF]
                         [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
@@ -2296,13 +2359,13 @@ SeparateSpeech related:
                         [--text_name TEXT_NAME [TEXT_NAME ...]]
                         [--enh_encoder {stft,conv,same}]
                         [--enh_encoder_conf ENH_ENCODER_CONF]
-                        [--enh_separator {asteroid,conformer,dan,dc_crn,dccrn,dpcl,dpcl_e2e,dprnn,dptnet,fasnet,rnn,skim,svoice,tcn,transformer,wpe_beamformer,tcn_nomask,ineube}]
+                        [--enh_separator {asteroid,conformer,dan,dc_crn,dccrn,dpcl,dpcl_e2e,dprnn,dptnet,fasnet,rnn,skim,svoice,tcn,transformer,wpe_beamformer,tcn_nomask,ineube,tfgridnet}]
                         [--enh_separator_conf ENH_SEPARATOR_CONF]
                         [--enh_decoder {stft,conv,same}]
                         [--enh_decoder_conf ENH_DECODER_CONF]
                         [--enh_mask_module {multi_mask}]
                         [--enh_mask_module_conf ENH_MASK_MODULE_CONF]
-                        [--frontend {default,sliding_window,s3prl,fused}]
+                        [--frontend {default,sliding_window,s3prl,fused,whisper}]
                         [--frontend_conf FRONTEND_CONF]
                         [--specaug {specaug,None}]
                         [--specaug_conf SPECAUG_CONF]
@@ -2310,11 +2373,11 @@ SeparateSpeech related:
                         [--normalize_conf NORMALIZE_CONF]
                         [--asr_preencoder {sinc,linear,None}]
                         [--asr_preencoder_conf ASR_PREENCODER_CONF]
-                        [--asr_encoder {conformer,transformer,transformer_multispkr,contextual_block_transformer,contextual_block_conformer,vgg_rnn,rnn,wav2vec2,hubert,hubert_pretrain,longformer,branchformer,e_branchformer}]
+                        [--asr_encoder {conformer,transformer,transformer_multispkr,contextual_block_transformer,contextual_block_conformer,vgg_rnn,rnn,wav2vec2,hubert,hubert_pretrain,torchaudiohubert,longformer,branchformer,whisper,e_branchformer}]
                         [--asr_encoder_conf ASR_ENCODER_CONF]
                         [--asr_postencoder {hugging_face_transformers,None}]
                         [--asr_postencoder_conf ASR_POSTENCODER_CONF]
-                        [--asr_decoder {transformer,lightweight_conv,lightweight_conv2d,dynamic_conv,dynamic_conv2d,rnn,transducer,mlm,hugging_face_transformers}]
+                        [--asr_decoder {transformer,lightweight_conv,lightweight_conv2d,dynamic_conv,dynamic_conv2d,rnn,transducer,mlm,whisper,hugging_face_transformers,s4,None}]
                         [--asr_decoder_conf ASR_DECODER_CONF]
                         [--st_preencoder {sinc,linear,None}]
                         [--st_preencoder_conf ST_PREENCODER_CONF]
@@ -2551,6 +2614,10 @@ Chunk iterator related:
                         Specify the shift width of chunks. If it&#39;s less than 1, allows the overlapping and if bigger than 1, there are some gaps between each chunk. (default: 0.5)
   --num_cache_chunks NUM_CACHE_CHUNKS
                         Shuffle in the specified number of chunks and generate mini-batches More larger this value, more randomness can be obtained. (default: 1024)
+  --chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]
+                        List of key prefixes. Keys that satisfy either condition below will be excluded from the length consistency check in ChunkIterFactory:
+                          - exactly match one of the prefixes in `chunk_excluded_key_prefixes`
+                          - have one of the prefixes in `chunk_excluded_key_prefixes` and end with numbers (default: [])
 
 Dataset related:
   --train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE
@@ -2561,6 +2628,13 @@ Dataset related:
 
                            utterance_id_a a.wav
                            utterance_id_b b.wav
+                           ...
+
+                        &quot;multi_columns_sound&quot;:
+                        Enable multi columns wav.scp. The following text file can be loaded as multi channels audio data
+
+                           utterance_id_a a.wav a2.wav
+                           utterance_id_b b.wav b2.wav
                            ...
 
                         &quot;score&quot;:
@@ -2627,6 +2701,13 @@ Dataset related:
                            utterance_id_B foo bar
                            ...
 
+                        &quot;random_text&quot;:
+                        Return text as is. The text must be converted to ndarray by &#39;preprocess&#39;.
+
+                           hello world
+                           foo bar
+                           ...
+
                         &quot;hdf5&quot;:
                         A HDF5 file which contains arrays at the first level or the second level.   &gt;&gt;&gt; f = h5py.File(&#39;file.h5&#39;)
                            &gt;&gt;&gt; array1 = f[&#39;utterance_id_A&#39;]
@@ -2664,6 +2745,10 @@ Dataset related:
                         The maximum cache size for validation data loader. e.g. 10MB, 20GB. If None, the 5 percent size of --max_cache_size (default: None)
 
 Optimizer related:
+  --exclude_weight_decay EXCLUDE_WEIGHT_DECAY
+                        Exclude weight decay in optimizer for model bias, normalization, or other special parameters (default: False)
+  --exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF
+                        The keyword arguments for configuring weight decay in optimizer. e.g., &#39;bias_weight_decay&#39;: False will set zero weight decay for bias params. See also espnet2.optimizers.optim_groups.configure_optimizer. (default: {})
   --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}
                         The optimizer type (default: adadelta)
   --optim_conf OPTIM_CONF
@@ -2693,7 +2778,7 @@ Optimizer related:
   --enh_model_conf ENH_MODEL_CONF
                         The keyword arguments for enh submodel class. (default: {&#39;stft_consistency&#39;: False, &#39;loss_type&#39;: &#39;mask_mse&#39;, &#39;mask_type&#39;: None})
   --asr_model_conf ASR_MODEL_CONF
-                        The keyword arguments for asr submodel class. (default: {&#39;ctc_weight&#39;: 0.5, &#39;interctc_weight&#39;: 0.0, &#39;ignore_id&#39;: -1, &#39;lsm_weight&#39;: 0.0, &#39;length_normalized_loss&#39;: False, &#39;report_cer&#39;: True, &#39;report_wer&#39;: True, &#39;sym_space&#39;: &#39;&lt;space&gt;&#39;, &#39;sym_blank&#39;: &#39;&lt;blank&gt;&#39;, &#39;sym_sos&#39;: &#39;&lt;sos/eos&gt;&#39;, &#39;sym_eos&#39;: &#39;&lt;sos/eos&gt;&#39;, &#39;extract_feats_in_collect_stats&#39;: True, &#39;lang_token_id&#39;: -1})
+                        The keyword arguments for asr submodel class. (default: {&#39;aux_ctc&#39;: None, &#39;ctc_weight&#39;: 0.5, &#39;interctc_weight&#39;: 0.0, &#39;ignore_id&#39;: -1, &#39;lsm_weight&#39;: 0.0, &#39;length_normalized_loss&#39;: False, &#39;report_cer&#39;: True, &#39;report_wer&#39;: True, &#39;sym_space&#39;: &#39;&lt;space&gt;&#39;, &#39;sym_blank&#39;: &#39;&lt;blank&gt;&#39;, &#39;transducer_multi_blank_durations&#39;: [], &#39;transducer_multi_blank_sigma&#39;: 0.05, &#39;sym_sos&#39;: &#39;&lt;sos/eos&gt;&#39;, &#39;sym_eos&#39;: &#39;&lt;sos/eos&gt;&#39;, &#39;extract_feats_in_collect_stats&#39;: True, &#39;lang_token_id&#39;: -1})
   --st_model_conf ST_MODEL_CONF
                         The keyword arguments for st submodel class. (default: {&#39;stft_consistency&#39;: False, &#39;loss_type&#39;: &#39;mask_mse&#39;, &#39;mask_type&#39;: None})
   --diar_model_conf DIAR_MODEL_CONF
@@ -2726,7 +2811,7 @@ Optimizer related:
                         The enh_encoder type (default: stft)
   --enh_encoder_conf ENH_ENCODER_CONF
                         The keyword arguments for enh_encoder (default: {})
-  --enh_separator {asteroid,conformer,dan,dc_crn,dccrn,dpcl,dpcl_e2e,dprnn,dptnet,fasnet,rnn,skim,svoice,tcn,transformer,wpe_beamformer,tcn_nomask,ineube}
+  --enh_separator {asteroid,conformer,dan,dc_crn,dccrn,dpcl,dpcl_e2e,dprnn,dptnet,fasnet,rnn,skim,svoice,tcn,transformer,wpe_beamformer,tcn_nomask,ineube,tfgridnet}
                         The enh_separator type (default: rnn)
   --enh_separator_conf ENH_SEPARATOR_CONF
                         The keyword arguments for enh_separator (default: {})
@@ -2738,7 +2823,7 @@ Optimizer related:
                         The enh_mask_module type (default: multi_mask)
   --enh_mask_module_conf ENH_MASK_MODULE_CONF
                         The keyword arguments for enh_mask_module (default: {})
-  --frontend {default,sliding_window,s3prl,fused}
+  --frontend {default,sliding_window,s3prl,fused,whisper}
                         The frontend type (default: default)
   --frontend_conf FRONTEND_CONF
                         The keyword arguments for frontend (default: {})
@@ -2754,7 +2839,7 @@ Optimizer related:
                         The asr_preencoder type (default: None)
   --asr_preencoder_conf ASR_PREENCODER_CONF
                         The keyword arguments for asr_preencoder (default: {})
-  --asr_encoder {conformer,transformer,transformer_multispkr,contextual_block_transformer,contextual_block_conformer,vgg_rnn,rnn,wav2vec2,hubert,hubert_pretrain,longformer,branchformer,e_branchformer}
+  --asr_encoder {conformer,transformer,transformer_multispkr,contextual_block_transformer,contextual_block_conformer,vgg_rnn,rnn,wav2vec2,hubert,hubert_pretrain,torchaudiohubert,longformer,branchformer,whisper,e_branchformer}
                         The asr_encoder type (default: rnn)
   --asr_encoder_conf ASR_ENCODER_CONF
                         The keyword arguments for asr_encoder (default: {})
@@ -2762,8 +2847,8 @@ Optimizer related:
                         The asr_postencoder type (default: None)
   --asr_postencoder_conf ASR_POSTENCODER_CONF
                         The keyword arguments for asr_postencoder (default: {})
-  --asr_decoder {transformer,lightweight_conv,lightweight_conv2d,dynamic_conv,dynamic_conv2d,rnn,transducer,mlm,hugging_face_transformers}
-                        The asr_decoder type (default: rnn)
+  --asr_decoder {transformer,lightweight_conv,lightweight_conv2d,dynamic_conv,dynamic_conv2d,rnn,transducer,mlm,whisper,hugging_face_transformers,s4,None}
+                        The asr_decoder type (default: None)
   --asr_decoder_conf ASR_DECODER_CONF
                         The keyword arguments for asr_decoder (default: {})
   --st_preencoder {sinc,linear,None}
@@ -2821,8 +2906,8 @@ Optimizer related:
 </pre></div>
 </div>
 </section>
-<section id="enh-scoring-py">
-<span id="id12"></span><h2>enh_scoring.py<a class="headerlink" href="#enh-scoring-py" title="Permalink to this headline">¶</a></h2>
+<section id="enh-scoring-py-1">
+<span id="enh-scoring-py"></span><h2>enh_scoring.py<a class="headerlink" href="#enh-scoring-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: enh_scoring.py [-h] [--config CONFIG]
                       [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
                       --output_dir OUTPUT_DIR
@@ -2850,8 +2935,8 @@ Input data related:
 </pre></div>
 </div>
 </section>
-<section id="enh-train-py">
-<span id="id13"></span><h2>enh_train.py<a class="headerlink" href="#enh-train-py" title="Permalink to this headline">¶</a></h2>
+<section id="enh-train-py-1">
+<span id="enh-train-py"></span><h2>enh_train.py<a class="headerlink" href="#enh-train-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: enh_train.py [-h] [--config CONFIG] [--print_config]
                     [--log_level {ERROR,WARNING,INFO,DEBUG,NOTSET}]
                     [--dry_run DRY_RUN]
@@ -2912,12 +2997,15 @@ Input data related:
                     [--chunk_length CHUNK_LENGTH]
                     [--chunk_shift_ratio CHUNK_SHIFT_RATIO]
                     [--num_cache_chunks NUM_CACHE_CHUNKS]
+                    [--chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]]
                     [--train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE]
                     [--valid_data_path_and_name_and_type VALID_DATA_PATH_AND_NAME_AND_TYPE]
                     [--allow_variable_data_keys ALLOW_VARIABLE_DATA_KEYS]
                     [--max_cache_size MAX_CACHE_SIZE]
                     [--max_cache_fd MAX_CACHE_FD]
                     [--valid_max_cache_size VALID_MAX_CACHE_SIZE]
+                    [--exclude_weight_decay EXCLUDE_WEIGHT_DECAY]
+                    [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                     [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                     [--optim_conf OPTIM_CONF]
                     [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
@@ -2937,7 +3025,7 @@ Input data related:
                     [--dynamic_mixing DYNAMIC_MIXING] [--utt2spk UTT2SPK]
                     [--dynamic_mixing_gain_db DYNAMIC_MIXING_GAIN_DB]
                     [--encoder {stft,conv,same}] [--encoder_conf ENCODER_CONF]
-                    [--separator {asteroid,conformer,dan,dc_crn,dccrn,dpcl,dpcl_e2e,dprnn,dptnet,fasnet,rnn,skim,svoice,tcn,transformer,wpe_beamformer,tcn_nomask,ineube}]
+                    [--separator {asteroid,conformer,dan,dc_crn,dccrn,dpcl,dpcl_e2e,dprnn,dptnet,fasnet,rnn,skim,svoice,tcn,transformer,wpe_beamformer,tcn_nomask,ineube,tfgridnet}]
                     [--separator_conf SEPARATOR_CONF]
                     [--decoder {stft,conv,same}] [--decoder_conf DECODER_CONF]
                     [--mask_module {multi_mask}]
@@ -3153,6 +3241,10 @@ Chunk iterator related:
                         Specify the shift width of chunks. If it&#39;s less than 1, allows the overlapping and if bigger than 1, there are some gaps between each chunk. (default: 0.5)
   --num_cache_chunks NUM_CACHE_CHUNKS
                         Shuffle in the specified number of chunks and generate mini-batches More larger this value, more randomness can be obtained. (default: 1024)
+  --chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]
+                        List of key prefixes. Keys that satisfy either condition below will be excluded from the length consistency check in ChunkIterFactory:
+                          - exactly match one of the prefixes in `chunk_excluded_key_prefixes`
+                          - have one of the prefixes in `chunk_excluded_key_prefixes` and end with numbers (default: [])
 
 Dataset related:
   --train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE
@@ -3163,6 +3255,13 @@ Dataset related:
 
                            utterance_id_a a.wav
                            utterance_id_b b.wav
+                           ...
+
+                        &quot;multi_columns_sound&quot;:
+                        Enable multi columns wav.scp. The following text file can be loaded as multi channels audio data
+
+                           utterance_id_a a.wav a2.wav
+                           utterance_id_b b.wav b2.wav
                            ...
 
                         &quot;score&quot;:
@@ -3229,6 +3328,13 @@ Dataset related:
                            utterance_id_B foo bar
                            ...
 
+                        &quot;random_text&quot;:
+                        Return text as is. The text must be converted to ndarray by &#39;preprocess&#39;.
+
+                           hello world
+                           foo bar
+                           ...
+
                         &quot;hdf5&quot;:
                         A HDF5 file which contains arrays at the first level or the second level.   &gt;&gt;&gt; f = h5py.File(&#39;file.h5&#39;)
                            &gt;&gt;&gt; array1 = f[&#39;utterance_id_A&#39;]
@@ -3266,6 +3372,10 @@ Dataset related:
                         The maximum cache size for validation data loader. e.g. 10MB, 20GB. If None, the 5 percent size of --max_cache_size (default: None)
 
 Optimizer related:
+  --exclude_weight_decay EXCLUDE_WEIGHT_DECAY
+                        Exclude weight decay in optimizer for model bias, normalization, or other special parameters (default: False)
+  --exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF
+                        The keyword arguments for configuring weight decay in optimizer. e.g., &#39;bias_weight_decay&#39;: False will set zero weight decay for bias params. See also espnet2.optimizers.optim_groups.configure_optimizer. (default: {})
   --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}
                         The optimizer type (default: adadelta)
   --optim_conf OPTIM_CONF
@@ -3318,7 +3428,7 @@ Optimizer related:
                         The encoder type (default: stft)
   --encoder_conf ENCODER_CONF
                         The keyword arguments for encoder (default: {})
-  --separator {asteroid,conformer,dan,dc_crn,dccrn,dpcl,dpcl_e2e,dprnn,dptnet,fasnet,rnn,skim,svoice,tcn,transformer,wpe_beamformer,tcn_nomask,ineube}
+  --separator {asteroid,conformer,dan,dc_crn,dccrn,dpcl,dpcl_e2e,dprnn,dptnet,fasnet,rnn,skim,svoice,tcn,transformer,wpe_beamformer,tcn_nomask,ineube,tfgridnet}
                         The separator type (default: rnn)
   --separator_conf SEPARATOR_CONF
                         The keyword arguments for separator (default: {})
@@ -3337,8 +3447,8 @@ Optimizer related:
 </pre></div>
 </div>
 </section>
-<section id="enh-tse-inference-py">
-<span id="id14"></span><h2>enh_tse_inference.py<a class="headerlink" href="#enh-tse-inference-py" title="Permalink to this headline">¶</a></h2>
+<section id="enh-tse-inference-py-1">
+<span id="enh-tse-inference-py"></span><h2>enh_tse_inference.py<a class="headerlink" href="#enh-tse-inference-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: enh_tse_inference.py [-h] [--config CONFIG]
                             [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
                             --output_dir OUTPUT_DIR [--ngpu NGPU]
@@ -3420,8 +3530,8 @@ SeparateSpeech related:
 </pre></div>
 </div>
 </section>
-<section id="enh-tse-train-py">
-<span id="id15"></span><h2>enh_tse_train.py<a class="headerlink" href="#enh-tse-train-py" title="Permalink to this headline">¶</a></h2>
+<section id="enh-tse-train-py-1">
+<span id="enh-tse-train-py"></span><h2>enh_tse_train.py<a class="headerlink" href="#enh-tse-train-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: enh_tse_train.py [-h] [--config CONFIG] [--print_config]
                         [--log_level {ERROR,WARNING,INFO,DEBUG,NOTSET}]
                         [--dry_run DRY_RUN]
@@ -3485,12 +3595,15 @@ SeparateSpeech related:
                         [--chunk_length CHUNK_LENGTH]
                         [--chunk_shift_ratio CHUNK_SHIFT_RATIO]
                         [--num_cache_chunks NUM_CACHE_CHUNKS]
+                        [--chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]]
                         [--train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE]
                         [--valid_data_path_and_name_and_type VALID_DATA_PATH_AND_NAME_AND_TYPE]
                         [--allow_variable_data_keys ALLOW_VARIABLE_DATA_KEYS]
                         [--max_cache_size MAX_CACHE_SIZE]
                         [--max_cache_fd MAX_CACHE_FD]
                         [--valid_max_cache_size VALID_MAX_CACHE_SIZE]
+                        [--exclude_weight_decay EXCLUDE_WEIGHT_DECAY]
+                        [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                         [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                         [--optim_conf OPTIM_CONF]
                         [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
@@ -3727,6 +3840,10 @@ Chunk iterator related:
                         Specify the shift width of chunks. If it&#39;s less than 1, allows the overlapping and if bigger than 1, there are some gaps between each chunk. (default: 0.5)
   --num_cache_chunks NUM_CACHE_CHUNKS
                         Shuffle in the specified number of chunks and generate mini-batches More larger this value, more randomness can be obtained. (default: 1024)
+  --chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]
+                        List of key prefixes. Keys that satisfy either condition below will be excluded from the length consistency check in ChunkIterFactory:
+                          - exactly match one of the prefixes in `chunk_excluded_key_prefixes`
+                          - have one of the prefixes in `chunk_excluded_key_prefixes` and end with numbers (default: [])
 
 Dataset related:
   --train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE
@@ -3737,6 +3854,13 @@ Dataset related:
 
                            utterance_id_a a.wav
                            utterance_id_b b.wav
+                           ...
+
+                        &quot;multi_columns_sound&quot;:
+                        Enable multi columns wav.scp. The following text file can be loaded as multi channels audio data
+
+                           utterance_id_a a.wav a2.wav
+                           utterance_id_b b.wav b2.wav
                            ...
 
                         &quot;score&quot;:
@@ -3803,6 +3927,13 @@ Dataset related:
                            utterance_id_B foo bar
                            ...
 
+                        &quot;random_text&quot;:
+                        Return text as is. The text must be converted to ndarray by &#39;preprocess&#39;.
+
+                           hello world
+                           foo bar
+                           ...
+
                         &quot;hdf5&quot;:
                         A HDF5 file which contains arrays at the first level or the second level.   &gt;&gt;&gt; f = h5py.File(&#39;file.h5&#39;)
                            &gt;&gt;&gt; array1 = f[&#39;utterance_id_A&#39;]
@@ -3840,6 +3971,10 @@ Dataset related:
                         The maximum cache size for validation data loader. e.g. 10MB, 20GB. If None, the 5 percent size of --max_cache_size (default: None)
 
 Optimizer related:
+  --exclude_weight_decay EXCLUDE_WEIGHT_DECAY
+                        Exclude weight decay in optimizer for model bias, normalization, or other special parameters (default: False)
+  --exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF
+                        The keyword arguments for configuring weight decay in optimizer. e.g., &#39;bias_weight_decay&#39;: False will set zero weight decay for bias params. See also espnet2.optimizers.optim_groups.configure_optimizer. (default: {})
   --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}
                         The optimizer type (default: adadelta)
   --optim_conf OPTIM_CONF
@@ -3910,8 +4045,8 @@ Optimizer related:
 </pre></div>
 </div>
 </section>
-<section id="gan-svs-train-py">
-<span id="id16"></span><h2>gan_svs_train.py<a class="headerlink" href="#gan-svs-train-py" title="Permalink to this headline">¶</a></h2>
+<section id="gan-svs-train-py-1">
+<span id="gan-svs-train-py"></span><h2>gan_svs_train.py<a class="headerlink" href="#gan-svs-train-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: gan_svs_train.py [-h] [--config CONFIG] [--print_config]
                         [--log_level {ERROR,WARNING,INFO,DEBUG,NOTSET}]
                         [--dry_run DRY_RUN]
@@ -3975,12 +4110,15 @@ Optimizer related:
                         [--chunk_length CHUNK_LENGTH]
                         [--chunk_shift_ratio CHUNK_SHIFT_RATIO]
                         [--num_cache_chunks NUM_CACHE_CHUNKS]
+                        [--chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]]
                         [--train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE]
                         [--valid_data_path_and_name_and_type VALID_DATA_PATH_AND_NAME_AND_TYPE]
                         [--allow_variable_data_keys ALLOW_VARIABLE_DATA_KEYS]
                         [--max_cache_size MAX_CACHE_SIZE]
                         [--max_cache_fd MAX_CACHE_FD]
                         [--valid_max_cache_size VALID_MAX_CACHE_SIZE]
+                        [--exclude_weight_decay EXCLUDE_WEIGHT_DECAY]
+                        [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                         [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                         [--optim_conf OPTIM_CONF]
                         [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
@@ -4004,8 +4142,9 @@ Optimizer related:
                         [--feats_extract {fbank,log_spectrogram,linear_spectrogram}]
                         [--feats_extract_conf FEATS_EXTRACT_CONF]
                         [--normalize {global_mvn,utterance_mvn,None}]
-                        [--normalize_conf NORMALIZE_CONF] [--svs {vits}]
-                        [--svs_conf SVS_CONF] [--pitch_extract {dio,None}]
+                        [--normalize_conf NORMALIZE_CONF]
+                        [--svs {vits,joint_score2wav}] [--svs_conf SVS_CONF]
+                        [--pitch_extract {dio,None}]
                         [--pitch_extract_conf PITCH_EXTRACT_CONF]
                         [--pitch_normalize {global_mvn,utterance_mvn,None}]
                         [--pitch_normalize_conf PITCH_NORMALIZE_CONF]
@@ -4231,6 +4370,10 @@ Chunk iterator related:
                         Specify the shift width of chunks. If it&#39;s less than 1, allows the overlapping and if bigger than 1, there are some gaps between each chunk. (default: 0.5)
   --num_cache_chunks NUM_CACHE_CHUNKS
                         Shuffle in the specified number of chunks and generate mini-batches More larger this value, more randomness can be obtained. (default: 1024)
+  --chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]
+                        List of key prefixes. Keys that satisfy either condition below will be excluded from the length consistency check in ChunkIterFactory:
+                          - exactly match one of the prefixes in `chunk_excluded_key_prefixes`
+                          - have one of the prefixes in `chunk_excluded_key_prefixes` and end with numbers (default: [])
 
 Dataset related:
   --train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE
@@ -4241,6 +4384,13 @@ Dataset related:
 
                            utterance_id_a a.wav
                            utterance_id_b b.wav
+                           ...
+
+                        &quot;multi_columns_sound&quot;:
+                        Enable multi columns wav.scp. The following text file can be loaded as multi channels audio data
+
+                           utterance_id_a a.wav a2.wav
+                           utterance_id_b b.wav b2.wav
                            ...
 
                         &quot;score&quot;:
@@ -4307,6 +4457,13 @@ Dataset related:
                            utterance_id_B foo bar
                            ...
 
+                        &quot;random_text&quot;:
+                        Return text as is. The text must be converted to ndarray by &#39;preprocess&#39;.
+
+                           hello world
+                           foo bar
+                           ...
+
                         &quot;hdf5&quot;:
                         A HDF5 file which contains arrays at the first level or the second level.   &gt;&gt;&gt; f = h5py.File(&#39;file.h5&#39;)
                            &gt;&gt;&gt; array1 = f[&#39;utterance_id_A&#39;]
@@ -4344,6 +4501,10 @@ Dataset related:
                         The maximum cache size for validation data loader. e.g. 10MB, 20GB. If None, the 5 percent size of --max_cache_size (default: None)
 
 Optimizer related:
+  --exclude_weight_decay EXCLUDE_WEIGHT_DECAY
+                        Exclude weight decay in optimizer for model bias, normalization, or other special parameters (default: False)
+  --exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF
+                        The keyword arguments for configuring weight decay in optimizer. e.g., &#39;bias_weight_decay&#39;: False will set zero weight decay for bias params. See also espnet2.optimizers.optim_groups.configure_optimizer. (default: {})
   --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}
                         The optimizer type (default: adadelta)
   --optim_conf OPTIM_CONF
@@ -4388,7 +4549,8 @@ Optimizer related:
                         The normalize type (default: None)
   --normalize_conf NORMALIZE_CONF
                         The keyword arguments for normalize (default: {})
-  --svs {vits}          The svs type (default: vits)
+  --svs {vits,joint_score2wav}
+                        The svs type (default: vits)
   --svs_conf SVS_CONF   The keyword arguments for svs (default: {})
   --pitch_extract {dio,None}
                         The pitch_extract type (default: None)
@@ -4409,8 +4571,8 @@ Optimizer related:
 </pre></div>
 </div>
 </section>
-<section id="gan-tts-train-py">
-<span id="id17"></span><h2>gan_tts_train.py<a class="headerlink" href="#gan-tts-train-py" title="Permalink to this headline">¶</a></h2>
+<section id="gan-tts-train-py-1">
+<span id="gan-tts-train-py"></span><h2>gan_tts_train.py<a class="headerlink" href="#gan-tts-train-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: gan_tts_train.py [-h] [--config CONFIG] [--print_config]
                         [--log_level {ERROR,WARNING,INFO,DEBUG,NOTSET}]
                         [--dry_run DRY_RUN]
@@ -4474,12 +4636,15 @@ Optimizer related:
                         [--chunk_length CHUNK_LENGTH]
                         [--chunk_shift_ratio CHUNK_SHIFT_RATIO]
                         [--num_cache_chunks NUM_CACHE_CHUNKS]
+                        [--chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]]
                         [--train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE]
                         [--valid_data_path_and_name_and_type VALID_DATA_PATH_AND_NAME_AND_TYPE]
                         [--allow_variable_data_keys ALLOW_VARIABLE_DATA_KEYS]
                         [--max_cache_size MAX_CACHE_SIZE]
                         [--max_cache_fd MAX_CACHE_FD]
                         [--valid_max_cache_size VALID_MAX_CACHE_SIZE]
+                        [--exclude_weight_decay EXCLUDE_WEIGHT_DECAY]
+                        [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                         [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                         [--optim_conf OPTIM_CONF]
                         [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
@@ -4727,6 +4892,10 @@ Chunk iterator related:
                         Specify the shift width of chunks. If it&#39;s less than 1, allows the overlapping and if bigger than 1, there are some gaps between each chunk. (default: 0.5)
   --num_cache_chunks NUM_CACHE_CHUNKS
                         Shuffle in the specified number of chunks and generate mini-batches More larger this value, more randomness can be obtained. (default: 1024)
+  --chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]
+                        List of key prefixes. Keys that satisfy either condition below will be excluded from the length consistency check in ChunkIterFactory:
+                          - exactly match one of the prefixes in `chunk_excluded_key_prefixes`
+                          - have one of the prefixes in `chunk_excluded_key_prefixes` and end with numbers (default: [])
 
 Dataset related:
   --train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE
@@ -4737,6 +4906,13 @@ Dataset related:
 
                            utterance_id_a a.wav
                            utterance_id_b b.wav
+                           ...
+
+                        &quot;multi_columns_sound&quot;:
+                        Enable multi columns wav.scp. The following text file can be loaded as multi channels audio data
+
+                           utterance_id_a a.wav a2.wav
+                           utterance_id_b b.wav b2.wav
                            ...
 
                         &quot;score&quot;:
@@ -4803,6 +4979,13 @@ Dataset related:
                            utterance_id_B foo bar
                            ...
 
+                        &quot;random_text&quot;:
+                        Return text as is. The text must be converted to ndarray by &#39;preprocess&#39;.
+
+                           hello world
+                           foo bar
+                           ...
+
                         &quot;hdf5&quot;:
                         A HDF5 file which contains arrays at the first level or the second level.   &gt;&gt;&gt; f = h5py.File(&#39;file.h5&#39;)
                            &gt;&gt;&gt; array1 = f[&#39;utterance_id_A&#39;]
@@ -4840,6 +5023,10 @@ Dataset related:
                         The maximum cache size for validation data loader. e.g. 10MB, 20GB. If None, the 5 percent size of --max_cache_size (default: None)
 
 Optimizer related:
+  --exclude_weight_decay EXCLUDE_WEIGHT_DECAY
+                        Exclude weight decay in optimizer for model bias, normalization, or other special parameters (default: False)
+  --exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF
+                        The keyword arguments for configuring weight decay in optimizer. e.g., &#39;bias_weight_decay&#39;: False will set zero weight decay for bias params. See also espnet2.optimizers.optim_groups.configure_optimizer. (default: {})
   --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}
                         The optimizer type (default: adadelta)
   --optim_conf OPTIM_CONF
@@ -4902,8 +5089,8 @@ Optimizer related:
 </pre></div>
 </div>
 </section>
-<section id="hubert-train-py">
-<span id="id18"></span><h2>hubert_train.py<a class="headerlink" href="#hubert-train-py" title="Permalink to this headline">¶</a></h2>
+<section id="hubert-train-py-1">
+<span id="hubert-train-py"></span><h2>hubert_train.py<a class="headerlink" href="#hubert-train-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: hubert_train.py [-h] [--config CONFIG] [--print_config]
                        [--log_level {ERROR,WARNING,INFO,DEBUG,NOTSET}]
                        [--dry_run DRY_RUN]
@@ -4966,19 +5153,23 @@ Optimizer related:
                        [--chunk_length CHUNK_LENGTH]
                        [--chunk_shift_ratio CHUNK_SHIFT_RATIO]
                        [--num_cache_chunks NUM_CACHE_CHUNKS]
+                       [--chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]]
                        [--train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE]
                        [--valid_data_path_and_name_and_type VALID_DATA_PATH_AND_NAME_AND_TYPE]
                        [--allow_variable_data_keys ALLOW_VARIABLE_DATA_KEYS]
                        [--max_cache_size MAX_CACHE_SIZE]
                        [--max_cache_fd MAX_CACHE_FD]
                        [--valid_max_cache_size VALID_MAX_CACHE_SIZE]
+                       [--exclude_weight_decay EXCLUDE_WEIGHT_DECAY]
+                       [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                        [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                        [--optim_conf OPTIM_CONF]
                        [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
                        [--scheduler_conf SCHEDULER_CONF]
                        [--token_list TOKEN_LIST]
                        [--init {chainer,xavier_uniform,xavier_normal,kaiming_uniform,kaiming_normal,None}]
-                       [--input_size INPUT_SIZE] [--model_conf MODEL_CONF]
+                       [--collate_fn_conf COLLATE_FN_CONF]
+                       [--input_size INPUT_SIZE] [--num_classes NUM_CLASSES]
                        [--use_preprocessor USE_PREPROCESSOR]
                        [--token_type {bpe,char,word,phn}]
                        [--bpemodel BPEMODEL]
@@ -4993,7 +5184,6 @@ Optimizer related:
                        [--pred_masked_weight PRED_MASKED_WEIGHT]
                        [--pred_nomask_weight PRED_NOMASK_WEIGHT]
                        [--loss_weights LOSS_WEIGHTS]
-                       [--hubert_dict HUBERT_DICT]
                        [--frontend {default,sliding_window}]
                        [--frontend_conf FRONTEND_CONF]
                        [--specaug {specaug,None}]
@@ -5002,8 +5192,10 @@ Optimizer related:
                        [--normalize_conf NORMALIZE_CONF]
                        [--preencoder {sinc,None}]
                        [--preencoder_conf PREENCODER_CONF]
-                       [--encoder {hubert_pretrain}]
+                       [--encoder {hubert_pretrain,torchaudio_hubert}]
                        [--encoder_conf ENCODER_CONF]
+                       [--model {fairseq,torchaudio}]
+                       [--model_conf MODEL_CONF]
 
 base parser
 
@@ -5015,8 +5207,6 @@ optional arguments:
                         weight for predictive loss for unmasked frames (default: 0.0)
   --loss_weights LOSS_WEIGHTS
                         weights for additional loss terms (not first one) (default: 0.0)
-  --hubert_dict HUBERT_DICT
-                        word-based target dictionary for Hubert pretraining stage (default: ./dict.txt)
 
 Common configuration:
   --print_config        Print the config file and exit (default: False)
@@ -5221,6 +5411,10 @@ Chunk iterator related:
                         Specify the shift width of chunks. If it&#39;s less than 1, allows the overlapping and if bigger than 1, there are some gaps between each chunk. (default: 0.5)
   --num_cache_chunks NUM_CACHE_CHUNKS
                         Shuffle in the specified number of chunks and generate mini-batches More larger this value, more randomness can be obtained. (default: 1024)
+  --chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]
+                        List of key prefixes. Keys that satisfy either condition below will be excluded from the length consistency check in ChunkIterFactory:
+                          - exactly match one of the prefixes in `chunk_excluded_key_prefixes`
+                          - have one of the prefixes in `chunk_excluded_key_prefixes` and end with numbers (default: [])
 
 Dataset related:
   --train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE
@@ -5231,6 +5425,13 @@ Dataset related:
 
                            utterance_id_a a.wav
                            utterance_id_b b.wav
+                           ...
+
+                        &quot;multi_columns_sound&quot;:
+                        Enable multi columns wav.scp. The following text file can be loaded as multi channels audio data
+
+                           utterance_id_a a.wav a2.wav
+                           utterance_id_b b.wav b2.wav
                            ...
 
                         &quot;score&quot;:
@@ -5297,6 +5498,13 @@ Dataset related:
                            utterance_id_B foo bar
                            ...
 
+                        &quot;random_text&quot;:
+                        Return text as is. The text must be converted to ndarray by &#39;preprocess&#39;.
+
+                           hello world
+                           foo bar
+                           ...
+
                         &quot;hdf5&quot;:
                         A HDF5 file which contains arrays at the first level or the second level.   &gt;&gt;&gt; f = h5py.File(&#39;file.h5&#39;)
                            &gt;&gt;&gt; array1 = f[&#39;utterance_id_A&#39;]
@@ -5334,6 +5542,10 @@ Dataset related:
                         The maximum cache size for validation data loader. e.g. 10MB, 20GB. If None, the 5 percent size of --max_cache_size (default: None)
 
 Optimizer related:
+  --exclude_weight_decay EXCLUDE_WEIGHT_DECAY
+                        Exclude weight decay in optimizer for model bias, normalization, or other special parameters (default: False)
+  --exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF
+                        The keyword arguments for configuring weight decay in optimizer. e.g., &#39;bias_weight_decay&#39;: False will set zero weight decay for bias params. See also espnet2.optimizers.optim_groups.configure_optimizer. (default: {})
   --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}
                         The optimizer type (default: adadelta)
   --optim_conf OPTIM_CONF
@@ -5349,10 +5561,12 @@ Optimizer related:
                         A text mapping int-id to token (default: None)
   --init {chainer,xavier_uniform,xavier_normal,kaiming_uniform,kaiming_normal,None}
                         The initialization method (default: None)
+  --collate_fn_conf COLLATE_FN_CONF
+                        The keyword arguments for collate_fn class. (default: {})
   --input_size INPUT_SIZE
                         The number of input dimension of the feature (default: None)
-  --model_conf MODEL_CONF
-                        The keyword arguments for model class. (default: {&#39;ignore_id&#39;: -1, &#39;lsm_weight&#39;: 0.0, &#39;length_normalized_loss&#39;: False, &#39;report_cer&#39;: False, &#39;report_wer&#39;: False, &#39;sym_space&#39;: &#39;&lt;space&gt;&#39;, &#39;sym_blank&#39;: &#39;&lt;blank&gt;&#39;, &#39;pred_masked_weight&#39;: 1.0, &#39;pred_nomask_weight&#39;: 0.0, &#39;loss_weights&#39;: 0.0})
+  --num_classes NUM_CLASSES
+                        The number of classes in hubert (default: None)
 
   Preprocess related
 
@@ -5394,15 +5608,19 @@ Optimizer related:
                         The preencoder type (default: None)
   --preencoder_conf PREENCODER_CONF
                         The keyword arguments for preencoder (default: {})
-  --encoder {hubert_pretrain}
+  --encoder {hubert_pretrain,torchaudio_hubert}
                         The encoder type (default: hubert_pretrain)
   --encoder_conf ENCODER_CONF
                         The keyword arguments for encoder (default: {})
+  --model {fairseq,torchaudio}
+                        The model type (default: fairseq)
+  --model_conf MODEL_CONF
+                        The keyword arguments for model (default: {})
 </pre></div>
 </div>
 </section>
-<section id="hugging-face-export-vocabulary-py">
-<span id="id19"></span><h2>hugging_face_export_vocabulary.py<a class="headerlink" href="#hugging-face-export-vocabulary-py" title="Permalink to this headline">¶</a></h2>
+<section id="hugging-face-export-vocabulary-py-1">
+<span id="hugging-face-export-vocabulary-py"></span><h2>hugging_face_export_vocabulary.py<a class="headerlink" href="#hugging-face-export-vocabulary-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: hugging_face_export_vocabulary.py [-h]
                                          [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
                                          --output OUTPUT --model_name_or_path
@@ -5424,8 +5642,8 @@ optional arguments:
 </pre></div>
 </div>
 </section>
-<section id="launch-py">
-<span id="id20"></span><h2>launch.py<a class="headerlink" href="#launch-py" title="Permalink to this headline">¶</a></h2>
+<section id="launch-py-1">
+<span id="launch-py"></span><h2>launch.py<a class="headerlink" href="#launch-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: launch.py [-h] [--cmd CMD] [--log LOG]
                  [--max_num_log_files MAX_NUM_LOG_FILES] [--ngpu NGPU]
                  [--num_nodes NUM_NODES | --host HOST] [--envfile ENVFILE]
@@ -5476,8 +5694,8 @@ optional arguments:
 </pre></div>
 </div>
 </section>
-<section id="lm-calc-perplexity-py">
-<span id="id21"></span><h2>lm_calc_perplexity.py<a class="headerlink" href="#lm-calc-perplexity-py" title="Permalink to this headline">¶</a></h2>
+<section id="lm-calc-perplexity-py-1">
+<span id="lm-calc-perplexity-py"></span><h2>lm_calc_perplexity.py<a class="headerlink" href="#lm-calc-perplexity-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: lm_calc_perplexity.py [-h] [--config CONFIG]
                              [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
                              --output_dir OUTPUT_DIR [--ngpu NGPU]
@@ -5519,8 +5737,8 @@ The model configuration related:
 </pre></div>
 </div>
 </section>
-<section id="lm-train-py">
-<span id="id22"></span><h2>lm_train.py<a class="headerlink" href="#lm-train-py" title="Permalink to this headline">¶</a></h2>
+<section id="lm-train-py-1">
+<span id="lm-train-py"></span><h2>lm_train.py<a class="headerlink" href="#lm-train-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: lm_train.py [-h] [--config CONFIG] [--print_config]
                    [--log_level {ERROR,WARNING,INFO,DEBUG,NOTSET}]
                    [--dry_run DRY_RUN]
@@ -5580,12 +5798,15 @@ The model configuration related:
                    [--chunk_length CHUNK_LENGTH]
                    [--chunk_shift_ratio CHUNK_SHIFT_RATIO]
                    [--num_cache_chunks NUM_CACHE_CHUNKS]
+                   [--chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]]
                    [--train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE]
                    [--valid_data_path_and_name_and_type VALID_DATA_PATH_AND_NAME_AND_TYPE]
                    [--allow_variable_data_keys ALLOW_VARIABLE_DATA_KEYS]
                    [--max_cache_size MAX_CACHE_SIZE]
                    [--max_cache_fd MAX_CACHE_FD]
                    [--valid_max_cache_size VALID_MAX_CACHE_SIZE]
+                   [--exclude_weight_decay EXCLUDE_WEIGHT_DECAY]
+                   [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                    [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                    [--optim_conf OPTIM_CONF]
                    [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
@@ -5813,6 +6034,10 @@ Chunk iterator related:
                         Specify the shift width of chunks. If it&#39;s less than 1, allows the overlapping and if bigger than 1, there are some gaps between each chunk. (default: 0.5)
   --num_cache_chunks NUM_CACHE_CHUNKS
                         Shuffle in the specified number of chunks and generate mini-batches More larger this value, more randomness can be obtained. (default: 1024)
+  --chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]
+                        List of key prefixes. Keys that satisfy either condition below will be excluded from the length consistency check in ChunkIterFactory:
+                          - exactly match one of the prefixes in `chunk_excluded_key_prefixes`
+                          - have one of the prefixes in `chunk_excluded_key_prefixes` and end with numbers (default: [])
 
 Dataset related:
   --train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE
@@ -5823,6 +6048,13 @@ Dataset related:
 
                            utterance_id_a a.wav
                            utterance_id_b b.wav
+                           ...
+
+                        &quot;multi_columns_sound&quot;:
+                        Enable multi columns wav.scp. The following text file can be loaded as multi channels audio data
+
+                           utterance_id_a a.wav a2.wav
+                           utterance_id_b b.wav b2.wav
                            ...
 
                         &quot;score&quot;:
@@ -5889,6 +6121,13 @@ Dataset related:
                            utterance_id_B foo bar
                            ...
 
+                        &quot;random_text&quot;:
+                        Return text as is. The text must be converted to ndarray by &#39;preprocess&#39;.
+
+                           hello world
+                           foo bar
+                           ...
+
                         &quot;hdf5&quot;:
                         A HDF5 file which contains arrays at the first level or the second level.   &gt;&gt;&gt; f = h5py.File(&#39;file.h5&#39;)
                            &gt;&gt;&gt; array1 = f[&#39;utterance_id_A&#39;]
@@ -5926,6 +6165,10 @@ Dataset related:
                         The maximum cache size for validation data loader. e.g. 10MB, 20GB. If None, the 5 percent size of --max_cache_size (default: None)
 
 Optimizer related:
+  --exclude_weight_decay EXCLUDE_WEIGHT_DECAY
+                        Exclude weight decay in optimizer for model bias, normalization, or other special parameters (default: False)
+  --exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF
+                        The keyword arguments for configuring weight decay in optimizer. e.g., &#39;bias_weight_decay&#39;: False will set zero weight decay for bias params. See also espnet2.optimizers.optim_groups.configure_optimizer. (default: {})
   --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}
                         The optimizer type (default: adadelta)
   --optim_conf OPTIM_CONF
@@ -5956,8 +6199,8 @@ Optimizer related:
 </pre></div>
 </div>
 </section>
-<section id="mt-inference-py">
-<span id="id23"></span><h2>mt_inference.py<a class="headerlink" href="#mt-inference-py" title="Permalink to this headline">¶</a></h2>
+<section id="mt-inference-py-1">
+<span id="mt-inference-py"></span><h2>mt_inference.py<a class="headerlink" href="#mt-inference-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: mt_inference.py [-h] [--config CONFIG]
                        [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
                        --output_dir OUTPUT_DIR [--ngpu NGPU] [--seed SEED]
@@ -6047,8 +6290,8 @@ Text converter related:
 </pre></div>
 </div>
 </section>
-<section id="mt-train-py">
-<span id="id24"></span><h2>mt_train.py<a class="headerlink" href="#mt-train-py" title="Permalink to this headline">¶</a></h2>
+<section id="mt-train-py-1">
+<span id="mt-train-py"></span><h2>mt_train.py<a class="headerlink" href="#mt-train-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: mt_train.py [-h] [--config CONFIG] [--print_config]
                    [--log_level {ERROR,WARNING,INFO,DEBUG,NOTSET}]
                    [--dry_run DRY_RUN]
@@ -6108,12 +6351,15 @@ Text converter related:
                    [--chunk_length CHUNK_LENGTH]
                    [--chunk_shift_ratio CHUNK_SHIFT_RATIO]
                    [--num_cache_chunks NUM_CACHE_CHUNKS]
+                   [--chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]]
                    [--train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE]
                    [--valid_data_path_and_name_and_type VALID_DATA_PATH_AND_NAME_AND_TYPE]
                    [--allow_variable_data_keys ALLOW_VARIABLE_DATA_KEYS]
                    [--max_cache_size MAX_CACHE_SIZE]
                    [--max_cache_fd MAX_CACHE_FD]
                    [--valid_max_cache_size VALID_MAX_CACHE_SIZE]
+                   [--exclude_weight_decay EXCLUDE_WEIGHT_DECAY]
+                   [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                    [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                    [--optim_conf OPTIM_CONF]
                    [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
@@ -6352,6 +6598,10 @@ Chunk iterator related:
                         Specify the shift width of chunks. If it&#39;s less than 1, allows the overlapping and if bigger than 1, there are some gaps between each chunk. (default: 0.5)
   --num_cache_chunks NUM_CACHE_CHUNKS
                         Shuffle in the specified number of chunks and generate mini-batches More larger this value, more randomness can be obtained. (default: 1024)
+  --chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]
+                        List of key prefixes. Keys that satisfy either condition below will be excluded from the length consistency check in ChunkIterFactory:
+                          - exactly match one of the prefixes in `chunk_excluded_key_prefixes`
+                          - have one of the prefixes in `chunk_excluded_key_prefixes` and end with numbers (default: [])
 
 Dataset related:
   --train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE
@@ -6362,6 +6612,13 @@ Dataset related:
 
                            utterance_id_a a.wav
                            utterance_id_b b.wav
+                           ...
+
+                        &quot;multi_columns_sound&quot;:
+                        Enable multi columns wav.scp. The following text file can be loaded as multi channels audio data
+
+                           utterance_id_a a.wav a2.wav
+                           utterance_id_b b.wav b2.wav
                            ...
 
                         &quot;score&quot;:
@@ -6428,6 +6685,13 @@ Dataset related:
                            utterance_id_B foo bar
                            ...
 
+                        &quot;random_text&quot;:
+                        Return text as is. The text must be converted to ndarray by &#39;preprocess&#39;.
+
+                           hello world
+                           foo bar
+                           ...
+
                         &quot;hdf5&quot;:
                         A HDF5 file which contains arrays at the first level or the second level.   &gt;&gt;&gt; f = h5py.File(&#39;file.h5&#39;)
                            &gt;&gt;&gt; array1 = f[&#39;utterance_id_A&#39;]
@@ -6465,6 +6729,10 @@ Dataset related:
                         The maximum cache size for validation data loader. e.g. 10MB, 20GB. If None, the 5 percent size of --max_cache_size (default: None)
 
 Optimizer related:
+  --exclude_weight_decay EXCLUDE_WEIGHT_DECAY
+                        Exclude weight decay in optimizer for model bias, normalization, or other special parameters (default: False)
+  --exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF
+                        The keyword arguments for configuring weight decay in optimizer. e.g., &#39;bias_weight_decay&#39;: False will set zero weight decay for bias params. See also espnet2.optimizers.optim_groups.configure_optimizer. (default: {})
   --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}
                         The optimizer type (default: adadelta)
   --optim_conf OPTIM_CONF
@@ -6520,21 +6788,21 @@ Optimizer related:
 </pre></div>
 </div>
 </section>
-<section id="pack-py">
-<span id="id25"></span><h2>pack.py<a class="headerlink" href="#pack-py" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: pack.py [-h] {asr,st,tts,enh,diar,svs,enh_s2t} ...
+<section id="pack-py-1">
+<span id="pack-py"></span><h2>pack.py<a class="headerlink" href="#pack-py-1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: pack.py [-h] {asr,st,tts,enh,diar,svs,enh_s2t,ssl} ...
 
 Pack input files to archive format
 
 positional arguments:
-  {asr,st,tts,enh,diar,svs,enh_s2t}
+  {asr,st,tts,enh,diar,svs,enh_s2t,ssl}
 
 optional arguments:
 </pre></div>
 </div>
 </section>
-<section id="split-scps-py">
-<span id="id26"></span><h2>split_scps.py<a class="headerlink" href="#split-scps-py" title="Permalink to this headline">¶</a></h2>
+<section id="split-scps-py-1">
+<span id="split-scps-py"></span><h2>split_scps.py<a class="headerlink" href="#split-scps-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: split_scps.py [-h]
                      [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
                      --scps SCPS [SCPS ...] [--names NAMES [NAMES ...]]
@@ -6556,8 +6824,8 @@ optional arguments:
 </pre></div>
 </div>
 </section>
-<section id="st-inference-py">
-<span id="id27"></span><h2>st_inference.py<a class="headerlink" href="#st-inference-py" title="Permalink to this headline">¶</a></h2>
+<section id="st-inference-py-1">
+<span id="st-inference-py"></span><h2>st_inference.py<a class="headerlink" href="#st-inference-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: st_inference.py [-h] [--config CONFIG]
                        [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
                        --output_dir OUTPUT_DIR [--ngpu NGPU] [--seed SEED]
@@ -6649,8 +6917,8 @@ Text converter related:
 </pre></div>
 </div>
 </section>
-<section id="st-train-py">
-<span id="id28"></span><h2>st_train.py<a class="headerlink" href="#st-train-py" title="Permalink to this headline">¶</a></h2>
+<section id="st-train-py-1">
+<span id="st-train-py"></span><h2>st_train.py<a class="headerlink" href="#st-train-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: st_train.py [-h] [--config CONFIG] [--print_config]
                    [--log_level {ERROR,WARNING,INFO,DEBUG,NOTSET}]
                    [--dry_run DRY_RUN]
@@ -6710,12 +6978,15 @@ Text converter related:
                    [--chunk_length CHUNK_LENGTH]
                    [--chunk_shift_ratio CHUNK_SHIFT_RATIO]
                    [--num_cache_chunks NUM_CACHE_CHUNKS]
+                   [--chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]]
                    [--train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE]
                    [--valid_data_path_and_name_and_type VALID_DATA_PATH_AND_NAME_AND_TYPE]
                    [--allow_variable_data_keys ALLOW_VARIABLE_DATA_KEYS]
                    [--max_cache_size MAX_CACHE_SIZE]
                    [--max_cache_fd MAX_CACHE_FD]
                    [--valid_max_cache_size VALID_MAX_CACHE_SIZE]
+                   [--exclude_weight_decay EXCLUDE_WEIGHT_DECAY]
+                   [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                    [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                    [--optim_conf OPTIM_CONF]
                    [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
@@ -6963,6 +7234,10 @@ Chunk iterator related:
                         Specify the shift width of chunks. If it&#39;s less than 1, allows the overlapping and if bigger than 1, there are some gaps between each chunk. (default: 0.5)
   --num_cache_chunks NUM_CACHE_CHUNKS
                         Shuffle in the specified number of chunks and generate mini-batches More larger this value, more randomness can be obtained. (default: 1024)
+  --chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]
+                        List of key prefixes. Keys that satisfy either condition below will be excluded from the length consistency check in ChunkIterFactory:
+                          - exactly match one of the prefixes in `chunk_excluded_key_prefixes`
+                          - have one of the prefixes in `chunk_excluded_key_prefixes` and end with numbers (default: [])
 
 Dataset related:
   --train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE
@@ -6973,6 +7248,13 @@ Dataset related:
 
                            utterance_id_a a.wav
                            utterance_id_b b.wav
+                           ...
+
+                        &quot;multi_columns_sound&quot;:
+                        Enable multi columns wav.scp. The following text file can be loaded as multi channels audio data
+
+                           utterance_id_a a.wav a2.wav
+                           utterance_id_b b.wav b2.wav
                            ...
 
                         &quot;score&quot;:
@@ -7039,6 +7321,13 @@ Dataset related:
                            utterance_id_B foo bar
                            ...
 
+                        &quot;random_text&quot;:
+                        Return text as is. The text must be converted to ndarray by &#39;preprocess&#39;.
+
+                           hello world
+                           foo bar
+                           ...
+
                         &quot;hdf5&quot;:
                         A HDF5 file which contains arrays at the first level or the second level.   &gt;&gt;&gt; f = h5py.File(&#39;file.h5&#39;)
                            &gt;&gt;&gt; array1 = f[&#39;utterance_id_A&#39;]
@@ -7076,6 +7365,10 @@ Dataset related:
                         The maximum cache size for validation data loader. e.g. 10MB, 20GB. If None, the 5 percent size of --max_cache_size (default: None)
 
 Optimizer related:
+  --exclude_weight_decay EXCLUDE_WEIGHT_DECAY
+                        Exclude weight decay in optimizer for model bias, normalization, or other special parameters (default: False)
+  --exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF
+                        The keyword arguments for configuring weight decay in optimizer. e.g., &#39;bias_weight_decay&#39;: False will set zero weight decay for bias params. See also espnet2.optimizers.optim_groups.configure_optimizer. (default: {})
   --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}
                         The optimizer type (default: adadelta)
   --optim_conf OPTIM_CONF
@@ -7168,67 +7461,8 @@ Optimizer related:
 </pre></div>
 </div>
 </section>
-<section id="tokenize-text-py">
-<span id="id29"></span><h2>tokenize_text.py<a class="headerlink" href="#tokenize-text-py" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: tokenize_text.py [-h]
-                        [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
-                        --input INPUT --output OUTPUT [--field FIELD]
-                        [--token_type {char,bpe,word,phn}]
-                        [--delimiter DELIMITER] [--space_symbol SPACE_SYMBOL]
-                        [--bpemodel BPEMODEL]
-                        [--non_linguistic_symbols NON_LINGUISTIC_SYMBOLS]
-                        [--remove_non_linguistic_symbols REMOVE_NON_LINGUISTIC_SYMBOLS]
-                        [--cleaner {None,tacotron,jaconv,vietnamese,korean_cleaner}]
-                        [--g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,pypinyin_g2p_phone_without_prosody,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,espeak_ng_italian,espeak_ng_ukrainian,espeak_ng_polish,g2pk,g2pk_no_space,g2pk_explicit_space,korean_jaso,korean_jaso_no_space,g2p_is}]
-                        [--write_vocabulary WRITE_VOCABULARY]
-                        [--vocabulary_size VOCABULARY_SIZE] [--cutoff CUTOFF]
-                        [--add_symbol ADD_SYMBOL]
-
-Tokenize texts
-
-optional arguments:
-  --log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}
-                        The verbose level of logging (default: INFO)
-  --input INPUT, -i INPUT
-                        Input text. - indicates sys.stdin (default: None)
-  --output OUTPUT, -o OUTPUT
-                        Output text. - indicates sys.stdout (default: None)
-  --field FIELD, -f FIELD
-                        The target columns of the input text as 1-based
-                        integer. e.g 2- (default: None)
-  --token_type {char,bpe,word,phn}, -t {char,bpe,word,phn}
-                        Token type (default: char)
-  --delimiter DELIMITER, -d DELIMITER
-                        The delimiter (default: None)
-  --space_symbol SPACE_SYMBOL
-                        The space symbol (default: &lt;space&gt;)
-  --bpemodel BPEMODEL   The bpemodel file path (default: None)
-  --non_linguistic_symbols NON_LINGUISTIC_SYMBOLS
-                        non_linguistic_symbols file path (default: None)
-  --remove_non_linguistic_symbols REMOVE_NON_LINGUISTIC_SYMBOLS
-                        Remove non-language-symbols from tokens (default:
-                        False)
-  --cleaner {None,tacotron,jaconv,vietnamese,korean_cleaner}
-                        Apply text cleaning (default: None)
-  --g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,pypinyin_g2p_phone_without_prosody,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,espeak_ng_italian,espeak_ng_ukrainian,espeak_ng_polish,g2pk,g2pk_no_space,g2pk_explicit_space,korean_jaso,korean_jaso_no_space,g2p_is}
-                        Specify g2p method if --token_type=phn (default: None)
-
-write_vocabulary mode related:
-  --write_vocabulary WRITE_VOCABULARY
-                        Write tokens list instead of tokenized text per line
-                        (default: False)
-  --vocabulary_size VOCABULARY_SIZE
-                        Vocabulary size (default: 0)
-  --cutoff CUTOFF       cut-off frequency used for write-vocabulary mode
-                        (default: 0)
-  --add_symbol ADD_SYMBOL
-                        Append symbol e.g. --add_symbol &#39;&lt;blank&gt;:0&#39;
-                        --add_symbol &#39;&lt;unk&gt;:1&#39; (default: [])
-</pre></div>
-</div>
-</section>
-<section id="tts-inference-py">
-<span id="id30"></span><h2>tts_inference.py<a class="headerlink" href="#tts-inference-py" title="Permalink to this headline">¶</a></h2>
+<section id="tts-inference-py-1">
+<span id="tts-inference-py"></span><h2>tts_inference.py<a class="headerlink" href="#tts-inference-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: tts_inference.py [-h] [--config CONFIG]
                         [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
                         --output_dir OUTPUT_DIR [--ngpu NGPU] [--seed SEED]
@@ -7326,8 +7560,8 @@ Vocoder related:
 </pre></div>
 </div>
 </section>
-<section id="tts-train-py">
-<span id="id31"></span><h2>tts_train.py<a class="headerlink" href="#tts-train-py" title="Permalink to this headline">¶</a></h2>
+<section id="tts-train-py-1">
+<span id="tts-train-py"></span><h2>tts_train.py<a class="headerlink" href="#tts-train-py-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: tts_train.py [-h] [--config CONFIG] [--print_config]
                     [--log_level {ERROR,WARNING,INFO,DEBUG,NOTSET}]
                     [--dry_run DRY_RUN]
@@ -7388,12 +7622,15 @@ Vocoder related:
                     [--chunk_length CHUNK_LENGTH]
                     [--chunk_shift_ratio CHUNK_SHIFT_RATIO]
                     [--num_cache_chunks NUM_CACHE_CHUNKS]
+                    [--chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]]
                     [--train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE]
                     [--valid_data_path_and_name_and_type VALID_DATA_PATH_AND_NAME_AND_TYPE]
                     [--allow_variable_data_keys ALLOW_VARIABLE_DATA_KEYS]
                     [--max_cache_size MAX_CACHE_SIZE]
                     [--max_cache_fd MAX_CACHE_FD]
                     [--valid_max_cache_size VALID_MAX_CACHE_SIZE]
+                    [--exclude_weight_decay EXCLUDE_WEIGHT_DECAY]
+                    [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                     [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                     [--optim_conf OPTIM_CONF]
                     [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
@@ -7409,7 +7646,7 @@ Vocoder related:
                     [--feats_extract_conf FEATS_EXTRACT_CONF]
                     [--normalize {global_mvn,None}]
                     [--normalize_conf NORMALIZE_CONF]
-                    [--tts {tacotron2,transformer,fastspeech,fastspeech2,vits,joint_text2wav,jets}]
+                    [--tts {tacotron2,transformer,fastspeech,fastspeech2,prodiff,vits,joint_text2wav,jets}]
                     [--tts_conf TTS_CONF] [--pitch_extract {dio,None}]
                     [--pitch_extract_conf PITCH_EXTRACT_CONF]
                     [--pitch_normalize {global_mvn,None}]
@@ -7633,6 +7870,10 @@ Chunk iterator related:
                         Specify the shift width of chunks. If it&#39;s less than 1, allows the overlapping and if bigger than 1, there are some gaps between each chunk. (default: 0.5)
   --num_cache_chunks NUM_CACHE_CHUNKS
                         Shuffle in the specified number of chunks and generate mini-batches More larger this value, more randomness can be obtained. (default: 1024)
+  --chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]
+                        List of key prefixes. Keys that satisfy either condition below will be excluded from the length consistency check in ChunkIterFactory:
+                          - exactly match one of the prefixes in `chunk_excluded_key_prefixes`
+                          - have one of the prefixes in `chunk_excluded_key_prefixes` and end with numbers (default: [])
 
 Dataset related:
   --train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE
@@ -7643,6 +7884,13 @@ Dataset related:
 
                            utterance_id_a a.wav
                            utterance_id_b b.wav
+                           ...
+
+                        &quot;multi_columns_sound&quot;:
+                        Enable multi columns wav.scp. The following text file can be loaded as multi channels audio data
+
+                           utterance_id_a a.wav a2.wav
+                           utterance_id_b b.wav b2.wav
                            ...
 
                         &quot;score&quot;:
@@ -7709,6 +7957,13 @@ Dataset related:
                            utterance_id_B foo bar
                            ...
 
+                        &quot;random_text&quot;:
+                        Return text as is. The text must be converted to ndarray by &#39;preprocess&#39;.
+
+                           hello world
+                           foo bar
+                           ...
+
                         &quot;hdf5&quot;:
                         A HDF5 file which contains arrays at the first level or the second level.   &gt;&gt;&gt; f = h5py.File(&#39;file.h5&#39;)
                            &gt;&gt;&gt; array1 = f[&#39;utterance_id_A&#39;]
@@ -7746,6 +8001,10 @@ Dataset related:
                         The maximum cache size for validation data loader. e.g. 10MB, 20GB. If None, the 5 percent size of --max_cache_size (default: None)
 
 Optimizer related:
+  --exclude_weight_decay EXCLUDE_WEIGHT_DECAY
+                        Exclude weight decay in optimizer for model bias, normalization, or other special parameters (default: False)
+  --exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF
+                        The keyword arguments for configuring weight decay in optimizer. e.g., &#39;bias_weight_decay&#39;: False will set zero weight decay for bias params. See also espnet2.optimizers.optim_groups.configure_optimizer. (default: {})
   --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}
                         The optimizer type (default: adadelta)
   --optim_conf OPTIM_CONF
@@ -7778,7 +8037,7 @@ Optimizer related:
                         The normalize type (default: global_mvn)
   --normalize_conf NORMALIZE_CONF
                         The keyword arguments for normalize (default: {})
-  --tts {tacotron2,transformer,fastspeech,fastspeech2,vits,joint_text2wav,jets}
+  --tts {tacotron2,transformer,fastspeech,fastspeech2,prodiff,vits,joint_text2wav,jets}
                         The tts type (default: tacotron2)
   --tts_conf TTS_CONF   The keyword arguments for tts (default: {})
   --pitch_extract {dio,None}
